@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -92,12 +93,12 @@ export default function Page() {
                   </dl>
 
                   <div className="flex justify-end">
-                    <a
-                      href="#"
+                    <Link
+                      href="/cart/process"
                       className="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
                     >
                       Checkout
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

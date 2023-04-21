@@ -1,5 +1,5 @@
-import { FeaturedProductsSection } from "~/lib/products/sections/FeaturedProductsSection";
-import { FeaturedRestaurantsSection } from "~/lib/restaurants/sections/FeaturedRestaurantsSection";
+import { FeaturedProductsSection } from "~/components/products/sections/FeaturedProductsSection";
+import { FeaturedRestaurantsSection } from "~/components/restaurants/sections/FeaturedRestaurantsSection";
 
 export default function Page() {
   return (
