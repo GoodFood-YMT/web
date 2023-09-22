@@ -1,3 +1,5 @@
+"use client";
+
 export default function Page() {
-  return <h1>Test</h1>;
+  return <h1></h1>;
 }
