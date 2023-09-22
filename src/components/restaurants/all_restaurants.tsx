@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useFetchAllRestaurants } from "~/hooks/restaurants/use_fetch_all_restaurants";
 import { cn } from "~/utils/cn";
@@ -16,7 +17,9 @@ export const AllRestaurants = () => {
       <div className={cn("grid grid-cols-4")}>
         {restaurants.data?.pages.map((page) =>
           page.data.map((restaurant) => (
-            <div key={restaurant.id}>{restaurant.name}</div>
+            <Link href={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+              {restaurant.name}
+            </Link>
           )),
         )}
       </div>
