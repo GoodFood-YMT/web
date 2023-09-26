@@ -1,9 +1,8 @@
 import "./globals.css";
-
 import { PropsWithChildren } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import { Toaster } from "react-hot-toast";
 import { Providers } from "~/app/providers";
 import { cn } from "~/utils/cn";
 
@@ -19,6 +18,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <body className={cn(inter.className)}>
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );

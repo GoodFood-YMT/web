@@ -1,3 +1,4 @@
+import { getCookie } from "cookies-next";
 import { env } from "~/env.mjs";
 
 export async function apiFetch<T>(
@@ -11,16 +12,17 @@ export async function apiFetch<T>(
     method,
     body,
     headers: {
+      Authorization: `Bearer ${getCookie("token")}`,
       accept: "application/json",
       "content-type": "application/json",
     },
   });
 
+  console.log("response", response);
+
   if (response.ok) {
     return response.json() as Promise<T>;
   }
-
-  console.log("response", response);
 
   throw new ApiError(response.status, await response.json());
 }
