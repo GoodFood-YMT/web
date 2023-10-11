@@ -9,7 +9,7 @@ const fetchAllCategories = async (page: number, limit: number) => {
     lastPage: string;
     totalPages: number;
     totalRecords: number;
-    nexPage: string | null;
+    nextPage: string | null;
     previousPage: string | null;
     data: Array<{
       id: string;
@@ -28,7 +28,6 @@ export const useFetchAllCategories = (page: number = 1, limit: number = 10) => {
       return fetchAllCategories(pageParam ?? page, limit);
     },
     getNextPageParam: (result) => {
-      console.log("result, ", result)
       if (result.pageNumber < result.totalPages) {
         return result.pageNumber + 1;
       }
