@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Home } from "lucide-react";
+import { Home, Users } from "lucide-react";
+import { LoggedInAdminSilent } from "~/components/auth/conditionnals/silents/logged_in_admin_silent";
 import { Logo } from "~/components/identity/logo";
 import { buttonVariants } from "~/components/ui/button";
+import { UserNav } from "~/components/user_nav";
 import { cn } from "~/utils/cn";
 
 export const AdminSidebar = () => {
@@ -13,7 +15,7 @@ export const AdminSidebar = () => {
         <Logo size={72} />
       </Link>
 
-      <div>
+      <div className="flex flex-col gap-1">
         <Link
           href="/admin"
           className={cn(
@@ -23,6 +25,22 @@ export const AdminSidebar = () => {
         >
           <Home size={16} /> Home
         </Link>
+
+        <LoggedInAdminSilent>
+          <Link
+            href="/admin/users"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "w-full justify-start gap-1",
+            )}
+          >
+            <Users size={16} /> Users
+          </Link>
+        </LoggedInAdminSilent>
+
+        <div className="absolute bottom-5 left-5">
+          <UserNav />
+        </div>
       </div>
     </aside>
   );
