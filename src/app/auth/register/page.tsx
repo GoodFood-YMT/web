@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LoginForm } from "~/components/auth/login_form";
+import { RegisterForm } from "~/components/auth/register_form";
 import { Logo } from "~/components/identity/logo";
 import { cn } from "~/utils/cn";
 
@@ -13,8 +13,8 @@ export default function Page() {
       <Link href="/">
         <Logo size={128} />
       </Link>
-      <h1 className="text-4xl font-medium">Sign in</h1>
-      <LoginForm />
+      <h1 className="text-4xl font-medium">Sign up</h1>
+      <RegisterForm />
     </div>
   );
 }

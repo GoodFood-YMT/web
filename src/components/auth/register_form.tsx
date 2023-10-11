@@ -19,19 +19,28 @@ import { useAuth } from "~/hooks/auth/use_auth";
 
 const formSchema = z.object({
   email: z.string().email(),
+  firstname: z.string(),
+  lastname: z.string(),
   password: z.string(),
+  passwordConfirmation: z.string(),
 });
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const router = useRouter();
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   const handleSubmit = (payload: z.infer<typeof formSchema>) => {
-    login(payload.email, payload.password);
+    register(
+      payload.email,
+      payload.firstname,
+      payload.lastname,
+      payload.password,
+      payload.passwordConfirmation,
+    );
     router.refresh();
   };
 
@@ -57,6 +66,34 @@ export const LoginForm = () => {
 
         <FormField
           control={form.control}
+          name="firstname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Firstname</FormLabel>
+              <FormControl>
+                <Input placeholder="John" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="lastname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Lastname</FormLabel>
+              <FormControl>
+                <Input placeholder="Doe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -68,13 +105,28 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="passwordConfirmation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="*******" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div className="flex items-center justify-between gap-4">
-          <Button type="submit">Login</Button>
+          <Button type="submit">Register</Button>
           <Link
-            href="/auth/register"
+            href="/auth/login"
             className="text-orange-500 transition hover:text-orange-600"
           >
-            Not member ?
+            Already member ?
           </Link>
         </div>
       </form>
