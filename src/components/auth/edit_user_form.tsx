@@ -77,7 +77,7 @@ export const EditUserForm = ({ user }: Props) => {
       {
         onSuccess: () => {
           toast.success("User updated");
-          router.refresh();
+          router.push("/admin/users");
         },
         onError: () => {
           toast.error("Error while updating user");
