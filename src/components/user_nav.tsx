@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { LogOut, User } from "lucide-react";
+import { GaugeCircle, LogOut, User } from "lucide-react";
+import { LoggedInWithHighRoleSilent } from "~/components/auth/conditionnals/silents/logged_in_with_high_role_silent";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
@@ -50,6 +51,14 @@ export const UserNav = () => {
             <User size={16} />
             My account
           </DropdownMenuItem>
+        </Link>
+        <Link href="/admin">
+          <LoggedInWithHighRoleSilent>
+            <DropdownMenuItem>
+              <GaugeCircle size={16} />
+              Administration
+            </DropdownMenuItem>
+          </LoggedInWithHighRoleSilent>
         </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-red-500" onClick={() => logout()}>
