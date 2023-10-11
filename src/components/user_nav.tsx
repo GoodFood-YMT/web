@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
@@ -43,8 +45,15 @@ export const UserNav = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <Link href="/account">
+          <DropdownMenuItem>
+            <User size={16} />
+            My account
+          </DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator />
         <DropdownMenuItem className="text-red-500" onClick={() => logout()}>
-          Log out
+          <LogOut size={16} /> Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
