@@ -7,7 +7,7 @@ const fetchIngredientById = async(id: string) => {
         name: string;
         quantity: number;
         restaurantId: string;
-    }>(`/calatog/ingredients/${id}`)
+    }>(`/catalog/ingredients/${id}`)
 };
 
 export const useFetchIngredientById = (id: string) => {

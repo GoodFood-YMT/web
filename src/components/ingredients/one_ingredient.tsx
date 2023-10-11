@@ -19,9 +19,9 @@ export const OneIngredient = ({id}: Props) =>{
 
     return (
         <div>
-            <p>{ingredient.data?.name}</p>
-            <p>{ingredient.data?.quantity}</p>
-            <p>{ingredient.data?.restaurantId}</p>
+            <p>ingredient: {ingredient.data?.name}</p>
+            <p>quantity: {ingredient.data?.quantity}</p>
+            <p>restaurant: {ingredient.data?.restaurantId}</p>
         </div>
     )
 }
