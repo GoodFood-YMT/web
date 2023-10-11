@@ -28,6 +28,7 @@ export const useFetchAllCategories = (page: number = 1, limit: number = 10) => {
       return fetchAllCategories(pageParam ?? page, limit);
     },
     getNextPageParam: (result) => {
+      console.log("result, ", result)
       if (result.pageNumber < result.totalPages) {
         return result.pageNumber + 1;
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useFetchCategoryById } from "~/hooks/catalog/use_fetch_category_by_id";
+import { useFetchCategoryById } from "~/hooks/catalog/categories/use_fetch_category_by_id";
 
 interface Props {
   id: string;

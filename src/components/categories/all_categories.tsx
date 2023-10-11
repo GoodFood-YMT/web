@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
-import { useFetchAllCategories } from "~/hooks/catalog/use_fetch_all_categories";
+import { useFetchAllCategories } from "~/hooks/catalog/categories/use_fetch_all_categories";
 import { cn } from "~/utils/cn";
 
 export const AllCategories = () => {
