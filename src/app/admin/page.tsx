@@ -1,5 +1,5 @@
-import { LoggedIn } from "~/components/auth/logged_in";
+import { LoggedInWithHighRole } from "~/components/auth/conditionnals/logged_in_with_high_role";
 
 export default function Page() {
-  return <LoggedIn>Dashboard</LoggedIn>;
+  return <LoggedInWithHighRole>Homepage</LoggedInWithHighRole>;
 }

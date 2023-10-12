@@ -44,6 +44,35 @@ export function useAuth() {
     [authenticate],
   );
 
+  const register = useCallback(
+    (
+      email: string,
+      firstname: string,
+      lastname: string,
+      password: string,
+      passwordConfirmation: string,
+    ) => {
+      apiFetch<Token>("/auth/register", {
+        json: {
+          email,
+          firstname,
+          lastname,
+          password,
+          password_confirmation: passwordConfirmation,
+        },
+      })
+        .then((data) =>
+          setCookie("token", data.token, {
+            expires: new Date(data.expires_at),
+          }),
+        )
+        .then(authenticate)
+        .then(() => window.location.assign("/"))
+        .catch(() => toast.error("An error happened"));
+    },
+    [authenticate],
+  );
+
   const logout = useCallback(() => {
     apiFetch<Account>("/auth/logout", { method: "DELETE" })
       .then(() => setCookie("token", "", { expires: new Date(0) }))
@@ -55,6 +84,7 @@ export function useAuth() {
     status,
     authenticate,
     login,
+    register,
     logout,
   };
 }
