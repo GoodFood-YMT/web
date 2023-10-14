@@ -1,7 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchAllProducts = async (page: number, limit: number) => {
+const fetchInStockProducts = async (page: number, limit: number) => {
     return await apiFetch<{
         pageNumber: number;
         pageSize: number;
@@ -28,11 +28,11 @@ const fetchAllProducts = async (page: number, limit: number) => {
     }>(`/catalog/products/inStock?pageNumber=${page}&pageSize=${limit}`);
 };
 
-export const useFetchAllProducts = (page: number = 1, limit: number = 10) =>{
+export const useFetchInStockProducts = (page: number = 1, limit: number = 10) =>{
     return useInfiniteQuery({
-        queryKey: ["products", page, limit],
+        queryKey: ["in-stock-products", page, limit],
         queryFn: ({ pageParam}) => {
-            return fetchAllProducts(pageParam ?? page, limit);
+            return fetchInStockProducts(pageParam ?? page, limit);
         },
         getNextPageParam: (result) =>{
             if(result.pageNumber < result.totalPages){

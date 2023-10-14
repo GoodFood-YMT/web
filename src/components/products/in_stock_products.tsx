@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
-import { useFetchAllProducts } from "~/hooks/catalog/products/use_fetch_all_products";
+import { useFetchInStockProducts } from "~/hooks/catalog/products/use_fetch_in_stock_products";
 import { cn } from "~/utils/cn";
 
-export const AllProducts = () => {
-    const products = useFetchAllProducts();
+export const InStockProducts = () => {
+    const products = useFetchInStockProducts();
 
     if(products.isError){
         return <div>Something went wrong</div>
