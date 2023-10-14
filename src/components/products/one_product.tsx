@@ -18,9 +18,9 @@ export const OneProduct = ({id}:Props) =>{
     }
 
     return <div>
-        <p>product: {product.data.label}</p>
-        <p>description: {product.data.description}</p>
-        <p>{product.data.price} €</p>
-        <p>quantity: {product.data.quantity}</p>
+        <p>Product: {product.data.label}</p>
+        <p>Description: {product.data.description}</p>
+        <p>Price: {product.data.price} €</p>
+        <p>Quantity: {product.data.quantity}</p>
     </div>
 }
