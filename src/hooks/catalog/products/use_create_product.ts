@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchCreateProducts = async (data: {
+const fetchCreateProduct = async (data: {
     label: string;
     description: string;
     price: string;
@@ -34,7 +34,7 @@ export const useCreateProduct = () =>{
             visible: boolean,
             categoryId: string
         }) => {
-            return fetchCreateProducts(payload)
+            return fetchCreateProduct(payload)
         }
     })
 }
