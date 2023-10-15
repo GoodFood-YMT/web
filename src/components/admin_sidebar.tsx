@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Home, Store, Users } from "lucide-react";
+import { Home, Store, TableProperties, Users } from "lucide-react";
 import { LoggedInAdminSilent } from "~/components/auth/conditionnals/silents/logged_in_admin_silent";
 import { Logo } from "~/components/identity/logo";
 import { buttonVariants } from "~/components/ui/button";
@@ -47,6 +47,18 @@ export const AdminSidebar = () => {
             )}
           >
             <Store size={16} /> Restaurants
+          </Link>
+        </LoggedInAdminSilent>
+
+        <LoggedInAdminSilent>
+          <Link
+            href="/admin/categories"
+            className={cn(
+              buttonVariants({ variant: "outline"}),
+              "w-full justify-start gap-1"
+            )}
+          >
+            <TableProperties size={16}/> Categories
           </Link>
         </LoggedInAdminSilent>
 
