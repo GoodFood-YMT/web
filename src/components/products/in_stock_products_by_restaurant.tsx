@@ -22,7 +22,7 @@ export const InStockProductsByRestaurant = ({restaurantId}: Props) => {
             <div className={cn("grid grid-cols-4")}>
                 {products.data?.pages.map((page) =>
                         page.data.map((product) => (
-                            <Link href={`/products/${product.id}`} key={product.id}>
+                            <Link href={`/restaurants/${restaurantId}/products/${product.id}`} key={product.id}>
                                 {product.label}
                             </Link>
                         ))

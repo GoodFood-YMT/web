@@ -7,6 +7,7 @@ import { Logo } from "~/components/identity/logo";
 import { buttonVariants } from "~/components/ui/button";
 import { UserNav } from "~/components/user_nav";
 import { cn } from "~/utils/cn";
+import { LoggedInManagerSilent } from "./auth/conditionnals/silents/logged_in_manager_silent";
 
 export const AdminSidebar = () => {
   return (
@@ -61,6 +62,14 @@ export const AdminSidebar = () => {
             <TableProperties size={16}/> Categories
           </Link>
         </LoggedInAdminSilent>
+
+        <LoggedInManagerSilent>
+          <Link
+            href="/admin/products"
+            className={cn(buttonVariants({ variant: 'outline'}), "w-full justify-start gap-1")}>
+              <TableProperties size={16}/> Products
+          </Link>
+        </LoggedInManagerSilent>
 
         <div className="absolute bottom-5 left-5">
           <UserNav />

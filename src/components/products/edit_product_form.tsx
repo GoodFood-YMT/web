@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
 import { useFetchAllCategories } from "~/hooks/catalog/categories/use_fetch_all_categories";
-import { useCreateProduct } from "~/hooks/catalog/products/use_create_product";
+import { useUpdateProduct } from "~/hooks/catalog/products/use_update_products";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
@@ -19,37 +19,58 @@ import {
 } from "../ui/select";
 import { Switch } from "../ui/switch";
 
+interface Props {
+  product: {
+    id: string;
+    label: string;
+    description: string;
+    price: number;
+    visible: boolean;
+    quantity: number;
+    createdAt: Date;
+    updatedAt: Date | null;
+    categoryId: string;
+    restaurantId: string | null;
+  };
+}
+
 const formSchema = z.object({
   label: z.string(),
   description: z.string(),
+  price: z.number(),
   visible: z.boolean(),
-  price: z.string(),
   categoryId: z.string(),
 });
 
-export const AddProductForm = () => {
+export const EditProductForm = ({ product }: Props) => {
   const router = useRouter();
   const categories = useFetchAllCategories(1, 100);
-  const createProduct = useCreateProduct();
+  const updateProduct = useUpdateProduct();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categoryId: "null",
-      visible: false,
+      label: product.label,
+      description: product.description,
+      price: product.price,
+      visible: product.visible,
+      categoryId: product.categoryId,
     },
   });
 
   const handleSubmit = (payload: z.infer<typeof formSchema>) => {
-    createProduct.mutate(payload, {
-      onSuccess: () => {
-        toast.success("Product created");
-        router.push("/admin/products");
+    updateProduct.mutate(
+      { id: product.id, data: payload },
+      {
+        onSuccess: () => {
+          toast.success("Product updated");
+          router.push("/admin/products");
+        },
+        onError: () => {
+          toast.error("An error occurred");
+        },
       },
-      onError: () => {
-        toast.error("An error occurred");
-      },
-    });
+    );
   };
 
   return (
@@ -88,7 +109,13 @@ export const AddProductForm = () => {
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(event) =>
+                    field.onChange(parseInt(event.target.value))
+                  }
+                />
               </FormControl>
             </FormItem>
           )}

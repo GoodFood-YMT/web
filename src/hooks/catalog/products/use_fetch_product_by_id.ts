@@ -9,9 +9,7 @@ const fetchProductById = async (id: string) => {
     price: number;
     visible: boolean;
     quantity: number;
-    createdAt: Date;
-    updatedAt: Date | null;
-    categoryId: string;
+    categoryId: string | null;
     restaurantId: string | null;
   }>(`/catalog/products/${id}`);
 };
