@@ -88,7 +88,13 @@ export const AddProductForm = () => {
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(event) =>
+                    field.onChange(parseInt(event.target.value))
+                  }
+                />
               </FormControl>
             </FormItem>
           )}
