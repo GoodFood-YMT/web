@@ -1,22 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import { useFetchAllRestaurants } from "~/hooks/restaurants/use_fetch_all_restaurants";
 import { cn } from "~/utils/cn";
 
 export const AllRestaurants = () => {
-  const restaurants = useFetchAllRestaurants();
+  const [q, setQ] = useState("");
+  const restaurants = useFetchAllRestaurants(1, 10, q);
 
   if (restaurants.isError) {
     return <div>Something went wrong</div>;
   }
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const target: { search: { value: string } } = e.target as unknown as {
+      search: { value: string };
+    };
+    setQ(target.search.value);
+  };
+
   return (
     <>
+      <form onSubmit={handleSubmit} className="mb-4 flex items-center gap-2">
+        <Input type="text" placeholder="Search..." name="search" />
+        <Button type="submit">Search</Button>
+      </form>
       <div className={cn("grid grid-cols-4 gap-4")}>
         {restaurants.data?.pages.map((page) =>
           page.data.map((restaurant) => (
