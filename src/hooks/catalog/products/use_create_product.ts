@@ -6,7 +6,7 @@ const fetchCreateProduct = async (data: {
   description: string;
   price: string;
   visible: boolean;
-  categoryId: string;
+  categoryId: string | null;
 }) => {
   return await apiFetch<{
     id: string;
@@ -30,7 +30,7 @@ export const useCreateProduct = () => {
       description: string;
       price: string;
       visible: boolean;
-      categoryId: string;
+      categoryId: string | null;
     }) => {
       return fetchCreateProduct(payload);
     },

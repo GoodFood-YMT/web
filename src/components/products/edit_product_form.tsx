@@ -27,9 +27,7 @@ interface Props {
     price: number;
     visible: boolean;
     quantity: number;
-    createdAt: Date;
-    updatedAt: Date | null;
-    categoryId: string;
+    categoryId: string | null;
     restaurantId: string | null;
   };
 }
@@ -39,7 +37,7 @@ const formSchema = z.object({
   description: z.string(),
   price: z.number(),
   visible: z.boolean(),
-  categoryId: z.string(),
+  categoryId: z.string().nullable(),
 });
 
 export const EditProductForm = ({ product }: Props) => {
@@ -146,17 +144,13 @@ export const EditProductForm = ({ product }: Props) => {
               <FormControl>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  defaultValue={field.value ?? undefined}
                 >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.data?.pages[0].data.length === 0 && (
-                      <SelectItem value="null" disabled>
-                        No Category
-                      </SelectItem>
-                    )}
+                    <SelectItem value="null">No Category</SelectItem>
                     {categories.data?.pages.map((page) =>
                       page.data.map((category) => (
                         <SelectItem key={category.id} value={category.id}>

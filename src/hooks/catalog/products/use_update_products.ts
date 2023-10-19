@@ -8,7 +8,7 @@ const fetchUpdateProducts = async (
     description: string;
     price: number;
     visible: boolean;
-    categoryId: string;
+    categoryId: string | null;
   },
 ) => {
   return await apiFetch<{
@@ -18,8 +18,6 @@ const fetchUpdateProducts = async (
     price: number;
     visible: boolean;
     quantity: number;
-    createdAt: Date;
-    updatedAt: Date | null;
     categoryId: string | null;
     restaurantId: string | null;
   }>(`/catalog/products/${id}`, {
@@ -37,7 +35,7 @@ export const useUpdateProduct = () => {
         description: string;
         price: number;
         visible: boolean;
-        categoryId: string;
+        categoryId: string | null;
       };
     }) => {
       return fetchUpdateProducts(payload.id, payload.data);

@@ -24,7 +24,7 @@ const formSchema = z.object({
   description: z.string(),
   visible: z.boolean(),
   price: z.string(),
-  categoryId: z.string(),
+  categoryId: z.string().nullable(),
 });
 
 export const AddProductForm = () => {
@@ -117,19 +117,12 @@ export const AddProductForm = () => {
             <FormItem>
               <FormLabel>Category</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} required={false}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.data?.pages[0].data.length === 0 && (
-                      <SelectItem value="null" disabled>
-                        No Category
-                      </SelectItem>
-                    )}
+                    <SelectItem value="null">No Category</SelectItem>
                     {categories.data?.pages.map((page) =>
                       page.data.map((category) => (
                         <SelectItem key={category.id} value={category.id}>
