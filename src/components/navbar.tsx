@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Logo } from "~/components/identity/logo";
+import { buttonVariants } from "~/components/ui/button";
 import { UserNav } from "~/components/user_nav";
 import { useAccountStore } from "~/stores/account_store";
 
@@ -16,7 +17,7 @@ export const Navbar = () => {
         </Link>
 
         <div className="flex items-center gap-4">
-          <Link
+          {/* <Link
             href="/restaurants"
             className="font-medium transition hover:opacity-80"
           >
@@ -27,7 +28,7 @@ export const Navbar = () => {
             className="font-medium transition hover:opacity-80"
           >
             Products
-          </Link>
+          </Link> */}
         </div>
       </div>
       {account ? (
@@ -36,7 +37,9 @@ export const Navbar = () => {
         </>
       ) : (
         <>
-          <Link href="/auth/login">Sign in</Link>
+          <Link href="/auth/login" className={buttonVariants({})}>
+            Sign in
+          </Link>
         </>
       )}
     </nav>

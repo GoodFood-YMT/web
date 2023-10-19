@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchAllRestaurants = async (page: number, limit: number) => {
+const fetchAllRestaurants = async (page: number, limit: number, q: string) => {
   return await apiFetch<{
     meta: {
       total: number;
@@ -24,17 +24,18 @@ const fetchAllRestaurants = async (page: number, limit: number) => {
       created_at: string;
       updated_at: string;
     }>;
-  }>(`/restaurants?page=${page}&limit=${limit}`);
+  }>(`/restaurants?page=${page}&limit=${limit}&q=${q}`);
 };
 
 export const useFetchAllRestaurants = (
   page: number = 1,
   limit: number = 10,
+  q: string = "",
 ) => {
   return useInfiniteQuery({
-    queryKey: ["restaurants", page, limit],
+    queryKey: ["restaurants", page, limit, q],
     queryFn: ({ pageParam }) => {
-      return fetchAllRestaurants(pageParam ?? page, limit);
+      return fetchAllRestaurants(pageParam ?? page, limit, q);
     },
     getNextPageParam: (result) => {
       if (result.meta.current_page < result.meta.last_page) {
