@@ -23,7 +23,7 @@ const formSchema = z.object({
   label: z.string(),
   description: z.string(),
   visible: z.boolean(),
-  price: z.string(),
+  price: z.number(),
   categoryId: z.string().nullable(),
 });
 
