@@ -4,7 +4,7 @@ import { apiFetch } from "~/utils/basic_fetch";
 const fetchCreateProduct = async (data: {
   label: string;
   description: string;
-  price: string;
+  price: number;
   visible: boolean;
   categoryId: string | null;
 }) => {
@@ -12,7 +12,7 @@ const fetchCreateProduct = async (data: {
     id: string;
     label: string;
     description: string;
-    price: string;
+    price: number;
     visible: boolean;
     quantity: 0;
     categoryId: string | null;
@@ -28,7 +28,7 @@ export const useCreateProduct = () => {
     mutationFn: (payload: {
       label: string;
       description: string;
-      price: string;
+      price: number;
       visible: boolean;
       categoryId: string | null;
     }) => {

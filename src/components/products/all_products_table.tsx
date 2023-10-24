@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Eye } from "lucide-react";
+import { Beef, Eye } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
 import {
   Table,
@@ -17,8 +17,6 @@ import { cn } from "~/utils/cn";
 export const AllProductsTable = () => {
   const products = useFetchAllProducts();
 
-  console.log(products);
-
   if (products.isError) {
     return <div>Something went wrong</div>;
   }
@@ -33,6 +31,7 @@ export const AllProductsTable = () => {
             <TableHead>Description</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Quantity</TableHead>
+            <TableHead>Ingredients</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -45,6 +44,11 @@ export const AllProductsTable = () => {
                 <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
+                <TableCell>
+                  <Link href={`/admin/products/${product.id}/ingredients`}>
+                    <Beef />
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <Link href={`/admin/products/${product.id}`}>
                     <Eye />
