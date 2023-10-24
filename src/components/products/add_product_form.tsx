@@ -36,6 +36,7 @@ export const AddProductForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       categoryId: "null",
+      price: 0,
       visible: false,
     },
   });
