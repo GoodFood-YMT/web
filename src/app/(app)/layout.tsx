@@ -7,7 +7,7 @@ export default function Layout({ children }: PropsWithChildren) {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-[2fr,1fr] gap-8 px-8">
+      <div className="grid grid-cols-[1.5fr,1fr] gap-8 px-8">
         <main>{children}</main>
         <BasketOrLogin />
       </div>
