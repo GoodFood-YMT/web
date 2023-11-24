@@ -19,48 +19,37 @@ export const Basket = () => {
   }
 
   return (
-    <div className="sticky top-8 h-[70vh] gap-4 bg-white p-4 shadow-sm">
-      <div className="flex h-full flex-col justify-between">
-        <div className="flex flex-col overflow-y-scroll">
-          <div className="mb-4 grid grid-cols-[1fr,3fr,2fr,1fr,1fr] gap-4">
-            <span className="text-xs font-medium">Product</span>
-            <span></span>
-            <span className="text-xs font-medium">Quantity</span>
-            <span className="text-xs font-medium">Total</span>
-            <span></span>
-          </div>
-
-          <div className="grid grid-cols-[1fr,3fr,2fr,1fr,1fr] gap-4">
-            <div className="relative aspect-square w-full">
-              <Image
-                src="/restaurants/burger.webp"
-                className="object-cover object-center"
-                alt="Product"
-                fill
-              />
+    <div className="sticky top-8 h-[600px] gap-4 bg-white p-4 shadow-sm">
+      <div className="flex h-full flex-col justify-between gap-4">
+        <div className="flex flex-col gap-2 overflow-y-scroll">
+          <h2 className="mb-2 text-lg font-medium tracking-tight">
+            Shopping Cart
+          </h2>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="grid grid-cols-[1fr,3fr,2fr] gap-2">
+              <div className="relative aspect-square w-full">
+                <Image
+                  src="/restaurants/burger.webp"
+                  className="object-cover object-center"
+                  alt="Product"
+                  fill
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-sm font-medium">Double CheeseBurger</span>
+                <span className="text-xs font-medium opacity-60">59.00 €</span>
+              </div>
+              <div className="flex items-center">
+                <Button variant="outline" size="sm">
+                  <Minus size={10} />
+                </Button>
+                <span className="px-2 font-medium">2</span>
+                <Button variant="outline" size="sm">
+                  <Plus size={10} />
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <span className="text-sm font-medium">Double CheeseBurger</span>
-              <span className="text-xs font-medium opacity-60">59.00 €</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm" className="rounded-full">
-                <Minus size={10} />
-              </Button>
-              <span className="font-medium">2</span>
-              <Button variant="outline" size="sm" className="rounded-full">
-                <Plus size={10} />
-              </Button>
-            </div>
-            <div className="flex items-center">
-              <span className="text-sm font-medium">56.00 €</span>
-            </div>
-            <div className="flex items-center">
-              <span>
-                <XCircle size={16} />
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex w-full flex-col gap-4 bg-black bg-opacity-[0.03] p-4">
