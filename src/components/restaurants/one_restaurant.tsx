@@ -21,7 +21,7 @@ export const OneRestaurant = ({ id }: Props) => {
 
   return (
     <>
-      <div className="bg-restaurant mb-8 h-[200px] w-full rounded-md bg-cover bg-center">
+      <div className="mb-8 h-[200px] w-full rounded-md bg-cover bg-center">
         <div className="relative h-full w-full rounded-md bg-black/30">
           <span className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-white px-2 py-1 text-xs text-black">
             <MapPin size={12} />

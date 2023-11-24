@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "~/components/identity/logo";
+import { UserDropdown } from "~/components/user_dropdown";
 
 export const Navbar = () => {
   return (
@@ -9,7 +10,7 @@ export const Navbar = () => {
           <Logo size={200} />
         </Link>
       </div>
-      <div></div>
+      <UserDropdown />
     </nav>
   );
 };
