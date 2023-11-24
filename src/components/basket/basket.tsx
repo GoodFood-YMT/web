@@ -20,11 +20,39 @@ export const Basket = () => {
 
   return (
     <div className="sticky top-8 h-[600px] gap-4 bg-white p-4 shadow-sm">
+      {/* <div className="flex h-full w-full flex-col">
+        <h2 className="mb-2 text-lg font-medium tracking-tight">
+          Shopping Cart
+        </h2>
+        <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+          <Image
+            src="/cart.webp"
+            width={80}
+            height={80}
+            alt="Cart"
+            className="mb-8"
+          />
+          <span className="text-center text-lg font-medium">
+            Your cart is empty
+          </span>
+          <span className="max-w-[60%] text-center text-xs opacity-60">
+            Looks like you haven{"'"}t added any food to your cart yet.
+          </span>
+        </div>
+      </div> */}
+
       <div className="flex h-full flex-col justify-between gap-4">
         <div className="flex flex-col gap-2 overflow-y-scroll">
-          <h2 className="mb-2 text-lg font-medium tracking-tight">
-            Shopping Cart
-          </h2>
+          <div className="mb-2 flex justify-between">
+            <h2 className="text-lg font-medium tracking-tight">
+              Shopping Cart
+            </h2>
+
+            <Button size="xs" variant="ghost">
+              Clear
+            </Button>
+          </div>
+
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="grid grid-cols-[1fr,3fr,2fr] gap-2">
               <div className="relative aspect-square w-full">
