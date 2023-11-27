@@ -5,7 +5,7 @@ import { UserDropdown } from "~/components/user_dropdown";
 
 export const Navbar = () => {
   return (
-    <nav className="relative mb-8 flex items-center justify-between px-8 py-12 shadow-sm">
+    <nav className="relative mb-8 flex items-center justify-between gap-8 px-8 py-12 shadow-sm max-md:flex-col">
       <Image
         src="/banner.webp"
         alt="Banner"

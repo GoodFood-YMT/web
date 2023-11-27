@@ -10,12 +10,12 @@ export const Footer = () => {
         <div className="flex flex-col justify-between gap-8">
           <Logo color="black" size={150} />
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 max-md:flex-col">
             <Image src="/android.png" alt="Android" width={150} height={50} />
             <Image src="/ios.png" alt="iOS" width={150} height={50} />
           </div>
         </div>
-        <div>
+        <div className="max-md:hidden">
           <ul className="mr-16 flex flex-col gap-2 text-sm">
             <li>
               <Link href="#">About us</Link>

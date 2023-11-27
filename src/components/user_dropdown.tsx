@@ -23,7 +23,7 @@ export const UserDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="z-40 flex cursor-pointer select-none items-center gap-4 bg-white px-6 py-4">
+        <div className="z-40 flex cursor-pointer select-none items-center gap-4 border bg-white px-6 py-4">
           <div className="relative h-[50px] w-[50px]">
             <Image
               src="/avatar.jpg"
@@ -42,7 +42,7 @@ export const UserDropdown = () => {
           </div>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mx-6 w-56">
+      <DropdownMenuContent className="mx-4 w-56">
         {account ? (
           <>
             <DropdownMenuGroup>

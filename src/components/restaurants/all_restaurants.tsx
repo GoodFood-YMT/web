@@ -42,7 +42,7 @@ export const AllRestaurants = () => {
         />
         <SearchIcon size={16} className="absolute left-4 opacity-50" />
       </form>
-      <div className={cn("grid grid-cols-2 gap-4")}>
+      <div className={cn("grid grid-cols-2 gap-4 max-md:grid-cols-1")}>
         {restaurants.data?.pages.map((page) =>
           page.data.map((restaurant) => (
             <Link
