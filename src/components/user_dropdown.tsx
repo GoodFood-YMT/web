@@ -23,7 +23,7 @@ export const UserDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex cursor-pointer select-none items-center gap-4">
+        <div className="z-40 flex cursor-pointer select-none items-center gap-4 bg-white px-6 py-4">
           <div className="relative h-[50px] w-[50px]">
             <Image
               src="/avatar.jpg"
@@ -32,7 +32,7 @@ export const UserDropdown = () => {
               fill
             />
           </div>
-          <div className="flex flex-col">
+          <div className="blend flex flex-col">
             <span className="text-sm font-medium">
               {account ? `${account.firstname} ${account.lastname}` : "Sign In"}
             </span>
