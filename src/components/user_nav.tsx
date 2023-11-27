@@ -3,16 +3,14 @@
 import Link from "next/link";
 import { GaugeCircle, LogOut, User } from "lucide-react";
 import { LoggedInWithHighRoleSilent } from "~/components/auth/conditionnals/silents/logged_in_with_high_role_silent";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown";
 import { useAuth } from "~/hooks/auth/use_auth";

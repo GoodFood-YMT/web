@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { LogIn, LogOut, Settings, ShoppingBasket } from "lucide-react";
+import { Gauge, LogIn, LogOut, User } from "lucide-react";
+import { LoggedInWithHighRoleSilent } from "~/components/auth/conditionnals/silents/logged_in_with_high_role_silent";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown";
+import { useAuth } from "~/hooks/auth/use_auth";
 import { useAccountStore } from "~/stores/account_store";
 
 export const UserDropdown = () => {
   const router = useRouter();
+  const { logout } = useAuth();
   const { account } = useAccountStore();
 
   return (
@@ -39,24 +42,23 @@ export const UserDropdown = () => {
           </div>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-6 w-56">
+      <DropdownMenuContent className="mx-6 w-56">
         {account ? (
           <>
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={() => router.push("/orders")}>
-                <ShoppingBasket className="mr-2 h-4 w-4" />
-                <span>Orders</span>
+                <User className="mr-2 h-4 w-4" />
+                <span>My account</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/settings")}>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
+              <LoggedInWithHighRoleSilent>
+                <DropdownMenuItem onClick={() => router.push("/admin")}>
+                  <Gauge className="mr-2 h-4 w-4" />
+                  <span>Administration</span>
+                </DropdownMenuItem>
+              </LoggedInWithHighRoleSilent>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="text-red-500"
-              onClick={() => router.push("/logout")}
-            >
+            <DropdownMenuItem className="text-red-500" onClick={() => logout()}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>
             </DropdownMenuItem>

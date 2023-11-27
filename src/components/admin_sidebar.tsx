@@ -12,6 +12,7 @@ import {
 import { LoggedInAdminSilent } from "~/components/auth/conditionnals/silents/logged_in_admin_silent";
 import { Logo } from "~/components/identity/logo";
 import { buttonVariants } from "~/components/ui/button";
+import { UserDropdown } from "~/components/user_dropdown";
 import { UserNav } from "~/components/user_nav";
 import { cn } from "~/utils/cn";
 import { LoggedInManagerSilent } from "./auth/conditionnals/silents/logged_in_manager_silent";
@@ -95,7 +96,7 @@ export const AdminSidebar = () => {
         </LoggedInManagerSilent>
 
         <div className="absolute bottom-5 left-5">
-          <UserNav />
+          <UserDropdown />
         </div>
       </div>
     </aside>
