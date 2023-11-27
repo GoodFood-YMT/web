@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Cross, Minus, Plus, XCircle } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { useClearBasket } from "~/hooks/basket/use_clear_basket";
 import { useFetchBasket } from "~/hooks/basket/use_fetch_basket";
