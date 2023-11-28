@@ -1,47 +1,24 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { Logo } from "~/components/identity/logo";
-import { buttonVariants } from "~/components/ui/button";
-import { UserNav } from "~/components/user_nav";
-import { useAccountStore } from "~/stores/account_store";
+import { UserDropdown } from "~/components/user_dropdown";
 
 export const Navbar = () => {
-  const { account } = useAccountStore();
-
   return (
-    <nav className="flex h-[90px] items-center justify-between border-b border-gray-200 bg-gray-100 px-8">
-      <div className="flex items-center gap-8">
+    <nav className="relative mb-8 flex items-center justify-between gap-8 px-8 py-12 shadow-sm max-md:flex-col">
+      <Image
+        src="/banner.webp"
+        alt="Banner"
+        className="object-cover object-center"
+        fill
+      />
+      <div className="absolute left-0 top-0 h-full w-full bg-black/10"></div>
+      <div className="z-40 flex items-center gap-8">
         <Link href="/">
-          <Logo size={72} />
+          <Logo size={200} />
         </Link>
-
-        <div className="flex items-center gap-4">
-          {/* <Link
-            href="/restaurants"
-            className="font-medium transition hover:opacity-80"
-          >
-            Restaurants
-          </Link>
-          <Link
-            href="/products"
-            className="font-medium transition hover:opacity-80"
-          >
-            Products
-          </Link> */}
-        </div>
       </div>
-      {account ? (
-        <>
-          <UserNav />
-        </>
-      ) : (
-        <>
-          <Link href="/auth/login" className={buttonVariants({})}>
-            Sign in
-          </Link>
-        </>
-      )}
+      <UserDropdown />
     </nav>
   );
 };

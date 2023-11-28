@@ -1,10 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Euro } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useFetchInStockProductsByRestaurant } from "~/hooks/catalog/products/use_fetch_products_by_restaurant";
 import { cn } from "~/utils/cn";
+import { formatToPrice } from "~/utils/format_to_price";
+import { getRestaurantImage } from "~/utils/get_restaurant_image";
 
 interface Props {
   restaurantId: string;
@@ -26,9 +29,15 @@ export const InStockProductsByRestaurant = ({ restaurantId }: Props) => {
               href={`/restaurants/${restaurantId}/products/${product.id}`}
               key={product.id}
             >
-              <div className="bg-product h-[250px] w-full rounded-md bg-cover bg-center">
-                <div className="relative h-full w-full rounded-md bg-black/30">
-                  {product.quantity > 0 ? (
+              <div className="relative aspect-square w-full">
+                <Image
+                  src={getRestaurantImage(product.label)}
+                  alt={product.label}
+                  fill
+                  className="object-cover object-center"
+                />
+                <div className="relative h-full w-full bg-black/30">
+                  {/* {product.quantity > 0 ? (
                     <span className="absolute left-2 top-2 rounded-full bg-green-300 px-2 text-xs text-green-900">
                       In stock
                     </span>
@@ -36,9 +45,9 @@ export const InStockProductsByRestaurant = ({ restaurantId }: Props) => {
                     <span className="absolute left-2 top-2 rounded-full bg-red-300 px-2 text-xs text-red-900">
                       Out of stock
                     </span>
-                  )}
+                  )} */}
                   <span className="absolute right-2 top-2 flex items-center rounded-full bg-white px-2 py-1 text-xs text-black">
-                    {product.price}
+                    {formatToPrice(product.price)}
                     <Euro size={12} />
                   </span>
                   <span className="absolute bottom-2 left-2 text-lg font-medium text-white">
