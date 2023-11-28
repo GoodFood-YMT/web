@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchAddToBasket = async (data: { id: string; quantity: number }) => {
+const fetchDeleteBasket = async (data: { id: string; quantity: number }) => {
   return await apiFetch<{
     user_id: string;
     items: Array<{
@@ -14,15 +14,15 @@ const fetchAddToBasket = async (data: { id: string; quantity: number }) => {
       restaurantId: string;
     }>;
   }>("/basket", {
-    method: "POST",
+    method: "DELETE",
     json: data,
   });
 };
 
-export const useAddToBasket = () => {
+export const useDeleteFromBasket = () => {
   return useMutation({
     mutationFn: (payload: { id: string; quantity: number }) => {
-      return fetchAddToBasket(payload);
+      return fetchDeleteBasket(payload);
     },
   });
 };

@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import { useQueryClient } from "@tanstack/react-query";
 import { ShoppingBag } from "lucide-react";
-import toast from "react-hot-toast";
 import { Button } from "~/components/ui/button";
 import { useAddToBasket } from "~/hooks/basket/use_add_to_basket";
 import { useFetchProductById } from "~/hooks/catalog/products/use_fetch_product_by_id";
+import { formatToPrice } from "~/utils/format_to_price";
 import { getRestaurantImage } from "~/utils/get_restaurant_image";
 
 interface Props {
@@ -13,12 +14,14 @@ interface Props {
 }
 
 export const OneProduct = ({ id }: Props) => {
+  const queryClient = useQueryClient();
   const product = useFetchProductById(id);
   const addToBasket = useAddToBasket();
 
-  const onAddToBasket = () => {
-    addToBasket.mutate({ id, quantity: 1 });
-    toast.success("Product added to basket");
+  const onAddToBasket = async () => {
+    await addToBasket.mutateAsync({ id, quantity: 1 });
+    // toast.success("Product added to basket");
+    await queryClient.invalidateQueries({ queryKey: ["basket"] });
   };
 
   if (product.isLoading) {
@@ -46,7 +49,7 @@ export const OneProduct = ({ id }: Props) => {
               {product.data.label}
             </h2>
             <span className="text-lg font-medium tracking-tight">
-              {product.data.price} €
+              {formatToPrice(product.data.price)} €
             </span>
           </div>
           <p className="text-sm opacity-60">{product.data.description}</p>

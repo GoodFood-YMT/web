@@ -6,6 +6,7 @@ import { Euro } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useFetchInStockProductsByRestaurant } from "~/hooks/catalog/products/use_fetch_products_by_restaurant";
 import { cn } from "~/utils/cn";
+import { formatToPrice } from "~/utils/format_to_price";
 import { getRestaurantImage } from "~/utils/get_restaurant_image";
 
 interface Props {
@@ -46,7 +47,7 @@ export const InStockProductsByRestaurant = ({ restaurantId }: Props) => {
                     </span>
                   )} */}
                   <span className="absolute right-2 top-2 flex items-center rounded-full bg-white px-2 py-1 text-xs text-black">
-                    {product.price}
+                    {formatToPrice(product.price)}
                     <Euro size={12} />
                   </span>
                   <span className="absolute bottom-2 left-2 text-lg font-medium text-white">

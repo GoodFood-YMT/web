@@ -4,12 +4,39 @@ import Image from "next/image";
 import { Minus, Plus, X } from "lucide-react";
 import { Loader } from "~/components/loader";
 import { Button } from "~/components/ui/button";
+import { useAddToBasket } from "~/hooks/basket/use_add_to_basket";
 import { useClearBasket } from "~/hooks/basket/use_clear_basket";
+import { useDeleteFromBasket } from "~/hooks/basket/use_delete_from_basket";
 import { useFetchBasket } from "~/hooks/basket/use_fetch_basket";
+import { formatToPrice } from "~/utils/format_to_price";
+import { getRestaurantImage } from "~/utils/get_restaurant_image";
 
 export const Basket = () => {
   const basket = useFetchBasket();
   const clearBasket = useClearBasket();
+  const addToBasket = useAddToBasket();
+  const deleteFromBasket = useDeleteFromBasket();
+
+  const subtotal =
+    basket.data?.items.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0,
+    ) ?? 0;
+
+  const handleClearBasket = async () => {
+    await clearBasket.mutateAsync();
+    await basket.refetch();
+  };
+
+  const handleAddToBasket = async (id: string) => {
+    await addToBasket.mutateAsync({ id, quantity: 1 });
+    await basket.refetch();
+  };
+
+  const handleDeleteFromBasket = async (id: string) => {
+    await deleteFromBasket.mutateAsync({ id, quantity: 1 });
+    await basket.refetch();
+  };
 
   if (basket.isLoading) {
     return (
@@ -78,35 +105,46 @@ export const Basket = () => {
                 Shopping Cart
               </h2>
 
-              <Button size="xs" variant="ghost">
+              <Button size="xs" variant="ghost" onClick={handleClearBasket}>
                 Clear
               </Button>
             </div>
 
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="grid grid-cols-[1fr,3fr,2fr] gap-2">
+            {basket.data.items.map((product) => (
+              <div
+                key={product.id}
+                className="grid grid-cols-[1fr,3fr,2fr] gap-2"
+              >
                 <div className="relative aspect-square w-full">
                   <Image
-                    src="/restaurants/burger.webp"
+                    src={getRestaurantImage(product.label)}
                     className="object-cover object-center"
                     alt="Product"
                     fill
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-sm font-medium">
-                    Double CheeseBurger
-                  </span>
+                  <span className="text-sm font-medium">{product.label}</span>
                   <span className="text-xs font-medium opacity-60">
-                    59.00 €
+                    {formatToPrice(product.price * product.quantity)} €
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDeleteFromBasket(product.id)}
+                  >
                     <Minus size={10} />
                   </Button>
-                  <span className="px-2 font-medium">2</span>
-                  <Button variant="outline" size="sm">
+                  <span className="w-[50px] px-2 text-center font-medium">
+                    {product.quantity}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleAddToBasket(product.id)}
+                  >
                     <Plus size={10} />
                   </Button>
                 </div>
@@ -117,7 +155,7 @@ export const Basket = () => {
             <div className="flex w-full flex-col gap-4 bg-black bg-opacity-[0.03] p-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium">Subtotal</span>
-                <span className="text-xs">56.00€</span>
+                <span className="text-xs">{formatToPrice(subtotal)}€</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium">Shipping & Handling</span>
@@ -126,7 +164,7 @@ export const Basket = () => {
               <div className="w-full border-b border-black/5"></div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Total</span>
-                <span className="text-sm">58.00€</span>
+                <span className="text-sm">{formatToPrice(subtotal + 2)}€</span>
               </div>
             </div>
             <Button>Proceed to checkout</Button>
