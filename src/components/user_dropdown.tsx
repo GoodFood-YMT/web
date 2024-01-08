@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Gauge, LogIn, LogOut, User } from "lucide-react";
@@ -15,7 +16,7 @@ import {
 import { useAuth } from "~/hooks/auth/use_auth";
 import { useAccountStore } from "~/stores/account_store";
 
-export const UserDropdown = () => {
+const UserDropdownComponent = () => {
   const router = useRouter();
   const { logout } = useAuth();
   const { account } = useAccountStore();
@@ -73,3 +74,8 @@ export const UserDropdown = () => {
     </DropdownMenu>
   );
 };
+
+export const UserDropdown = dynamic(
+  () => Promise.resolve(UserDropdownComponent),
+  { ssr: false },
+);
