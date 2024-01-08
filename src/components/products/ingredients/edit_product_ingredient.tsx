@@ -25,12 +25,17 @@ export const EditProductIngredient = ({ productId, ingredientId }: Props) => {
   }
 
   return (
-    <EditIngredientProductForm
-      productId={productId}
-      productIngredient={{
-        ingredientId: ingredientProduct.data.ingredientId,
-        quantity: ingredientProduct.data.quantity,
-      }}
-    />
+    <>
+      <h1 className="mb-4 text-2xl font-medium">
+        Ingredient {`"${ingredientProduct.data.name}"`}
+      </h1>
+      <EditIngredientProductForm
+        productId={productId}
+        productIngredient={{
+          ingredientId: ingredientProduct.data.ingredientId,
+          quantity: ingredientProduct.data.quantity,
+        }}
+      />
+    </>
   );
 };

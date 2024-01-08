@@ -16,7 +16,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={cn("bg-[#F5F7F9]", inter.className)}>
+      <body
+        className={cn(
+          "flex min-h-screen flex-col bg-[#F5F7F9]",
+          inter.className,
+        )}
+      >
         <Providers>{children}</Providers>
         <Toaster />
       </body>

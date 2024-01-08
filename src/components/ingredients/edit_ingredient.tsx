@@ -21,5 +21,12 @@ export const EditIngredient = ({ id }: Props) => {
     notFound();
   }
 
-  return <EditIngredientForm ingredient={ingredient.data} />;
+  return (
+    <>
+      <h1 className="mb-4 text-2xl font-medium">
+        Ingredient {`"${ingredient.data.name}"`}
+      </h1>
+      <EditIngredientForm ingredient={ingredient.data} />
+    </>
+  );
 };

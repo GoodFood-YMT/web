@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Minus, Plus, X } from "lucide-react";
 import { Loader } from "~/components/loader";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { useAddToBasket } from "~/hooks/basket/use_add_to_basket";
 import { useClearBasket } from "~/hooks/basket/use_clear_basket";
 import { useDeleteFromBasket } from "~/hooks/basket/use_delete_from_basket";
@@ -12,10 +14,13 @@ import { formatToPrice } from "~/utils/format_to_price";
 import { getRestaurantImage } from "~/utils/get_restaurant_image";
 
 export const Basket = () => {
+  const pathname = usePathname();
   const basket = useFetchBasket();
   const clearBasket = useClearBasket();
   const addToBasket = useAddToBasket();
   const deleteFromBasket = useDeleteFromBasket();
+
+  const readOnly = pathname === "/checkout";
 
   const subtotal =
     basket.data?.items.reduce(
@@ -99,15 +104,17 @@ export const Basket = () => {
         </div>
       ) : (
         <div className="flex h-full flex-col justify-between gap-4">
-          <div className="flex flex-col gap-2 overflow-y-scroll">
+          <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="mb-2 flex justify-between">
               <h2 className="text-lg font-medium tracking-tight">
                 Shopping Cart
               </h2>
 
-              <Button size="xs" variant="ghost" onClick={handleClearBasket}>
-                Clear
-              </Button>
+              {!readOnly && (
+                <Button size="xs" variant="ghost" onClick={handleClearBasket}>
+                  Clear
+                </Button>
+              )}
             </div>
 
             {basket.data.items.map((product) => (
@@ -130,23 +137,27 @@ export const Basket = () => {
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDeleteFromBasket(product.id)}
-                  >
-                    <Minus size={10} />
-                  </Button>
-                  <span className="w-[50px] px-2 text-center font-medium">
-                    {product.quantity}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleAddToBasket(product.id)}
-                  >
-                    <Plus size={10} />
-                  </Button>
+                  {!readOnly && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleDeleteFromBasket(product.id)}
+                      >
+                        <Minus size={10} />
+                      </Button>
+                      <span className="w-[50px] px-2 text-center font-medium">
+                        {product.quantity}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleAddToBasket(product.id)}
+                      >
+                        <Plus size={10} />
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
@@ -167,7 +178,12 @@ export const Basket = () => {
                 <span className="text-sm">{formatToPrice(subtotal + 2)}€</span>
               </div>
             </div>
-            <Button>Proceed to checkout</Button>
+
+            {!readOnly && (
+              <Link href="/checkout" className={buttonVariants({})}>
+                Proceed to checkout
+              </Link>
+            )}
           </div>
         </div>
       )}
