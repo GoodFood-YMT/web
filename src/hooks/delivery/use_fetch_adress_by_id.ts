@@ -1,4 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
 const fetchAddressById = async (id: string) => {
@@ -15,10 +16,10 @@ const fetchAddressById = async (id: string) => {
   });
 };
 
-export const useFetchAddressById = () => {
-  return useMutation({
-    mutationFn: (id: string) => {
-      return fetchAddressById(id);
-    },
+export const useFetchAddressById = (id: string) => {
+  return useQuery({
+    queryKey: ["address-by-id", id],
+    queryFn: () => fetchAddressById(id),
+    keepPreviousData: true,
   });
 };

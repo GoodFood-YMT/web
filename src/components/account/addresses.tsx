@@ -1,12 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { useRouter } from "next/navigation";
+import { TrashIcon } from "lucide-react";
+import toast from "react-hot-toast";
+import { buttonVariants } from "~/components/ui/button";
+import { useDeleteAddress } from "~/hooks/delivery/use_delete_address";
 import { useFetchAllAddresses } from "~/hooks/delivery/use_fetch_addresses";
 
 export const Addresses = () => {
+  const router = useRouter();
   const addresses = useFetchAllAddresses();
-  console.log(addresses);
+
+  const deleteAddress = useDeleteAddress();
+
+  const handleDeleteAddress = (id: string) => {
+    deleteAddress.mutate(id, {
+      onSuccess: () => {
+        toast.success("Address deleted");
+        router.push("/account");
+      },
+      onError: () => {
+        toast.error("An error occurred");
+      },
+    });
+  };
 
   return (
     <div className="bg-white p-4 shadow-sm">
@@ -23,7 +41,15 @@ export const Addresses = () => {
         </div>
         <div>
           {addresses.data?.addresses.map((address) => (
-            <div key={address.id}>{address.name}</div>
+            <div key={address.id} className="mb-2 flex justify-between">
+              <Link href={`/account/addresses/edit/${address.id}`}>
+                {address.name}
+              </Link>
+              <TrashIcon
+                className="hover: cursor-pointer"
+                onClick={() => handleDeleteAddress(address.id)}
+              />
+            </div>
           ))}
         </div>
       </div>
