@@ -99,7 +99,7 @@ export const Basket = () => {
         </div>
       ) : (
         <div className="flex h-full flex-col justify-between gap-4">
-          <div className="flex flex-col gap-2 overflow-y-scroll">
+          <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="mb-2 flex justify-between">
               <h2 className="text-lg font-medium tracking-tight">
                 Shopping Cart
