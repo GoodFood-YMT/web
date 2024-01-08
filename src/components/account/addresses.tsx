@@ -9,7 +9,6 @@ import { useDeleteAddress } from "~/hooks/delivery/use_delete_address";
 import { useFetchAllAddresses } from "~/hooks/delivery/use_fetch_addresses";
 
 export const Addresses = () => {
-  const router = useRouter();
   const addresses = useFetchAllAddresses();
 
   const deleteAddress = useDeleteAddress();
@@ -18,7 +17,7 @@ export const Addresses = () => {
     deleteAddress.mutate(id, {
       onSuccess: () => {
         toast.success("Address deleted");
-        router.push("/account");
+        addresses.refetch();
       },
       onError: () => {
         toast.error("An error occurred");
