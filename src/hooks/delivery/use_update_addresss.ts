@@ -25,7 +25,7 @@ const fetchUpdateAddress = async (
   });
 };
 
-export const useFetchUpdateAddress = () => {
+export const useUpdateAddress = () => {
   return useMutation({
     mutationFn: (payload: {
       id: string;

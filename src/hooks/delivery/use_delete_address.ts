@@ -15,7 +15,7 @@ const fetchDeleteAddress = async (id: string) => {
   });
 };
 
-export const useFetchDeleteAddress = () => {
+export const useDeleteAddress = () => {
   return useMutation({
     mutationFn: (id: string) => {
       return fetchDeleteAddress(id);

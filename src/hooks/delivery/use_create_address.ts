@@ -22,7 +22,7 @@ const fetchCreateAddress = async (data: {
   });
 };
 
-export const useFetchCreateAddress = () => {
+export const useCreateAddress = () => {
   return useMutation({
     mutationFn: (payload: {
       name: string;
