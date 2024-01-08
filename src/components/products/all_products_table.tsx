@@ -28,7 +28,6 @@ export const AllProductsTable = () => {
           <TableRow>
             <TableHead className="w-[350px]">ID</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Description</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Quantity</TableHead>
             <TableHead>Ingredients</TableHead>
@@ -41,7 +40,6 @@ export const AllProductsTable = () => {
               <TableRow key={product.id}>
                 <TableCell className="font-medium">{product.id}</TableCell>
                 <TableCell>{product.label}</TableCell>
-                <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>
