@@ -26,11 +26,9 @@ export const AllProductsTable = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[350px]">ID</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Quantity</TableHead>
-            <TableHead>Ingredients</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -38,16 +36,13 @@ export const AllProductsTable = () => {
           {products.data?.pages.map((page) =>
             page.data.map((product) => (
               <TableRow key={product.id}>
-                <TableCell className="font-medium">{product.id}</TableCell>
                 <TableCell>{product.label}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
-                <TableCell>
+                <TableCell className="flex items-center gap-2">
                   <Link href={`/admin/products/${product.id}/ingredients`}>
                     <Beef />
                   </Link>
-                </TableCell>
-                <TableCell>
                   <Link href={`/admin/products/${product.id}`}>
                     <Eye />
                   </Link>

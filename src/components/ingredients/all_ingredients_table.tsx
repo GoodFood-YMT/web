@@ -26,7 +26,6 @@ export const AllIngredientsTable = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[350px]">ID</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Quantity</TableHead>
             <TableHead>Actions</TableHead>
@@ -36,7 +35,6 @@ export const AllIngredientsTable = () => {
           {ingredients.data?.pages.map((page) =>
             page.data.map((ingredient) => (
               <TableRow key={ingredient.id}>
-                <TableCell className="font-medium">{ingredient.id}</TableCell>
                 <TableCell>{ingredient.name}</TableCell>
                 <TableCell>{ingredient.quantity}</TableCell>
                 <TableCell>

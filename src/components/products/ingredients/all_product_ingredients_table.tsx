@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Eye } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
-import { Input } from "~/components/ui/input";
+import { buttonVariants } from "~/components/ui/button";
 import {
   Table,
   TableBody,
@@ -14,6 +13,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { useFetchAllIngredientsByProduct } from "~/hooks/catalog/products/use_fetch_ingredients_by_product";
+import { useFetchProductById } from "~/hooks/catalog/products/use_fetch_product_by_id";
 import { cn } from "~/utils/cn";
 
 interface Props {
@@ -21,19 +21,29 @@ interface Props {
 }
 
 export const AllProductIngredientsTable = ({ productId }: Props) => {
-  const router = useRouter();
+  const product = useFetchProductById(productId);
   const ingredients = useFetchAllIngredientsByProduct(productId);
 
-  if (ingredients.isError) {
+  if (ingredients.isError || product.isError) {
     return <div>Something went wrong</div>;
   }
 
   return (
     <>
+      <div className="flex items-center justify-between">
+        <h1 className="mb-4 text-2xl font-medium">
+          {`"${product.data?.label}" `}Ingredients
+        </h1>
+        <Link
+          href={`/admin/products/${productId}/ingredients/add`}
+          className={buttonVariants({})}
+        >
+          Add
+        </Link>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[350px]">ID</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Quantity</TableHead>
           </TableRow>
@@ -42,9 +52,6 @@ export const AllProductIngredientsTable = ({ productId }: Props) => {
           {ingredients.data?.pages.map((page) =>
             page.data.map((ingredient) => (
               <TableRow key={ingredient.ingredientId}>
-                <TableCell className="font-medium">
-                  {ingredient.ingredientId}
-                </TableCell>
                 <TableCell>{ingredient.name}</TableCell>
                 <TableCell>{ingredient.quantity}</TableCell>
                 <TableCell>
