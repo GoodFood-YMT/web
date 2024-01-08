@@ -131,7 +131,9 @@ export const Basket = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-sm font-medium">{product.label}</span>
+                  <span className="text-sm font-medium">
+                    {readOnly && `${product.quantity}x`} {product.label}
+                  </span>
                   <span className="text-xs font-medium opacity-60">
                     {formatToPrice(product.price * product.quantity)} €
                   </span>

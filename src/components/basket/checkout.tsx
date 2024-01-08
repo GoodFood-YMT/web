@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  CheckIcon,
-  CreditCardIcon,
-  InfoIcon,
-  ShoppingBasketIcon,
-} from "lucide-react";
+import { CheckIcon, CreditCardIcon, InfoIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/utils/cn";
 
