@@ -1,4 +1,3 @@
-//affichage de la liste des produits / ingrédients du providers
 "use client";
 
 import { AiOutlineLoading } from "react-icons/ai";
