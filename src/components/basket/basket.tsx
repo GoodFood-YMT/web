@@ -107,7 +107,7 @@ export const Basket = () => {
           <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="mb-2 flex justify-between">
               <h2 className="text-lg font-medium tracking-tight">
-                Shopping Cart
+                {readOnly ? "Order Summary" : "Shopping Cart"}
               </h2>
 
               {!readOnly && (
