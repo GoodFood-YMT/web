@@ -4,13 +4,6 @@ import { apiFetch } from "~/utils/basic_fetch";
 const fetchCreateProvider = async (data: {
   name: string;
   restaurant_id: string;
-  ingredients: Array<{
-    id: string;
-    name: string;
-    price: number;
-    created_at: string;
-    updated_at: string;
-  }>;
 }) => {
   return await apiFetch<{
     id: string;
@@ -19,9 +12,6 @@ const fetchCreateProvider = async (data: {
     ingredients: Array<{
       id: string;
       name: string;
-      price: number;
-      created_at: string;
-      updated_at: string;
     }>;
     created_at: string;
     updated_at: string;
@@ -36,13 +26,6 @@ export const useCreateProvider = () => {
     mutationFn: (payload: {
       name: string;
       restaurant_id: string;
-      ingredients: Array<{
-        id: string;
-        name: string;
-        price: number;
-        created_at: string;
-        updated_at: string;
-      }>;
     }) => {
       return fetchCreateProvider(payload);
     },
