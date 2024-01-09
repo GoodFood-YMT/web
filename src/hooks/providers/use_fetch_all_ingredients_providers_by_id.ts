@@ -17,7 +17,11 @@ const fetchAllProvidersIngredients = async (id : string, page: number, limit: nu
     data: Array<{
         id: string;
         provider_id: string;
-        ingredient_id: string;
+        ingredient: Array<{
+            id: string;
+            name: string;
+            quantity: number;
+        }>;
         created_at: string;
         updated_at: string;
     }>;
