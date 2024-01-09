@@ -4,7 +4,6 @@ import { apiFetch } from "~/utils/basic_fetch";
 const fetchUpdateProviders = async (
   id: string,
   data: {
-    id: string;
     name: string;
     restaurant_id: string;
   },
@@ -22,7 +21,6 @@ export const useUpdateProviders = () => {
     mutationFn: (payload: {
       id: string;
       data: {
-        id: string;
         name: string;
         restaurant_id: string;
       };
