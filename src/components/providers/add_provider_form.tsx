@@ -20,7 +20,7 @@ const formSchema = z.object({
     restaurant_id: z.string(),
 });
   
-const AddProviderForm = () => {
+export const AddProviderForm = () => {
     const createProvider = useCreateProvider();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -29,12 +29,12 @@ const AddProviderForm = () => {
       
     const handleSubmit = (payload: z.infer<typeof formSchema>) => {
         createProvider.mutate(payload, {
-        onSuccess: () => {
-            toast.success("Provider created");
-        },
-        onError: () => {
-            toast.error("An error occurred");
-        },
+            onSuccess: () => {
+                toast.success("Provider created");
+            },
+            onError: () => {
+                toast.error("An error occurred");
+            },
         });
     };
 
