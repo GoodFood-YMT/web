@@ -18,13 +18,6 @@ const fetchAllProviders = async (page: number, limit: number) => {
       id: string;
       name: string;
       restaurant_id: string;
-      ingredients: Array<{
-        id: string;
-        name: string;
-        price: number;
-        created_at: string;
-        updated_at: string;
-      }>;
     }>;
   }>(`/providers?page=${page}&limit=${limit}`);
 };
