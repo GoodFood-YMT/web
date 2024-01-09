@@ -6,7 +6,9 @@ export default function Page() {
     <LoggedIn>
       <div className="bg-white p-4 shadow-sm">
         <div className="flex h-full w-full flex-col">
-          <h2 className="mb-2 text-lg font-medium tracking-tight">Addresses</h2>
+          <h2 className="mb-2 text-lg font-medium tracking-tight">
+            Create a new address
+          </h2>
           <AddAddress />
         </div>
       </div>
