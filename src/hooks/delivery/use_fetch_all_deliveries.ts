@@ -27,7 +27,7 @@ const fetchAllDeliveries = (page: number, limit: number) => {
   }>(`/delivery/deliveries?page=${page}&limit=${limit}`);
 };
 
-export const useFetchAllDeliveries = (page: number, limit: number) => {
+export const useFetchAllDeliveries = (page: number = 1, limit: number = 10) => {
   return useInfiniteQuery({
     queryKey: ["deliveries"],
     queryFn: ({ pageParam }) => {
