@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchFetchMyOrders = async (page: number, limit: number) => {
+const fetchMyOrders = async (page: number, limit: number) => {
   return await apiFetch<{
     meta: {
       total: number;
@@ -32,7 +32,7 @@ const fetchFetchMyOrders = async (page: number, limit: number) => {
 export const useFetchMyOrders = (page: number = 1, limit: number = 10) => {
   return useQuery({
     queryKey: ["my-orders", page, limit],
-    queryFn: () => fetchFetchMyOrders(page, limit),
+    queryFn: () => fetchMyOrders(page, limit),
     keepPreviousData: true,
   });
 };
