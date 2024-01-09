@@ -4,8 +4,8 @@ import { apiFetch } from "~/utils/basic_fetch";
 const fetchProviderById = async (id: string) => {
   return await apiFetch<{
     id: string;
+    name: string;
     restaurant_id: string;
-    ingredient_id: string;
     created_at: string;
     updated_at: string;
   }>(`/providers/${id}`);
