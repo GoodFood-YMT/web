@@ -27,7 +27,7 @@ export const Orders = () => {
               onClick={() => router.push(`/account/orders/${order.id}`)}
             >
               <h3 className="mb-1 text-base font-medium tracking-tight">
-                <span className="text-xs italic">{order.id}</span>
+                <span className="text-sm">{order.id}</span>
                 <br />
                 <span className="text-base">
                   {DateTime.fromISO(order.created_at).toFormat("DDD")}
