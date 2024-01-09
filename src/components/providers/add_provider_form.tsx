@@ -1,10 +1,19 @@
 "use client";
-import React, { useState } from 'react';
 import { useCreateProvider } from "~/hooks/providers/use_create_providers";
 import toast from "react-hot-toast";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 
 const formSchema = z.object({
     name: z.string(),
@@ -30,16 +39,23 @@ const AddProviderForm = () => {
     };
 
     return (
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <h1>New Provider</h1>
-            <label htmlFor="name">Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Provider's Name"
-            />
-            <button type="submit">Create</button>
-        </form>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                            <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit">Create</Button>
+            </form>
+        </Form>
     );
 };
