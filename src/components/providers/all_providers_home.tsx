@@ -18,7 +18,7 @@ export const AllProvidersHome = ({ id }: Props) => {
     {providers.data?.pages.map((page) =>
         page.data.map((providers) => (
           <link href={`/providers/${providers.id}/ingredients`} key={providers.id}>
-            {}
+            {providers.name}
           </link>
         )),
       )}

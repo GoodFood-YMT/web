@@ -30,8 +30,8 @@ export const AllProvidersTable = ({ id }: Props) => {
                 <tr>
                     <td>{providers_ingredients.ingredient[0].name}</td>
                     <td>
-                        <link href={`/providers/${providers_ingredients.id}/ingredients`}>
-                            
+                        <link>
+                          Delete
                         </link>
                     </td>
                 </tr>
