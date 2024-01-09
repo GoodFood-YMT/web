@@ -16,8 +16,12 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
 interface Props {
-    id: string;
-}
+    provider: {
+      id: string;
+      name: string;
+      restaurant_id: string;
+    };
+  }
 
 const formSchema = z.object({
     id: z.string(),
@@ -27,16 +31,21 @@ const formSchema = z.object({
     }),
 });
 
-const EditProviderForm = ({ id }: Props) => {
+export const EditProviderForm = ({ provider }: Props) => {
 
-    const providers = useUpdateProviders();
+    const updateProvider = useUpdateProviders();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-    });
+        defaultValues: {
+            data: { 
+                name: provider.name 
+            },
+        },
+      });
       
     const handleSubmit = (payload: z.infer<typeof formSchema>) => {
-        providers.mutate(payload, {
+        updateProvider.mutate(payload, {
         onSuccess: () => {
             toast.success("Provider modified");
         },
