@@ -3,6 +3,7 @@
 import { AiOutlineLoading } from "react-icons/ai";
 import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all_ingredients_providers_by_id";
 import { cn } from "~/utils/cn";
+import { AddIngredient } from "~/components/ingredients/add_ingredient_form";
 
 interface Props {
     id: string;
@@ -17,6 +18,7 @@ export const AllProvidersTable = ({ id }: Props) => {
 
   return (
     <>
+      <h1>Provider {providers_ingredients.data?.pages[0]?.data[0]?.provider_id}</h1>
       <table>
         <thead>
           <tr>
@@ -52,6 +54,8 @@ export const AllProvidersTable = ({ id }: Props) => {
           Load more
         </button>
       )}
+      
+      <AddIngredient />
     </>
   );
 };
