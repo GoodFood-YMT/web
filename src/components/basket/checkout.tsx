@@ -19,7 +19,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { useClearBasket } from "~/hooks/basket/use_clear_basket";
 import { useFetchBasket } from "~/hooks/basket/use_fetch_basket";
-import { useFetchAllAddresses } from "~/hooks/delivery/use_fetch_addresses";
+import { useFetchAllAddresses } from "~/hooks/delivery/addresses/use_fetch_addresses";
 import { useCreateOrder } from "~/hooks/ordering/use_create_order";
 import { cn } from "~/utils/cn";
 
