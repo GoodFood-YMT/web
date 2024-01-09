@@ -2,8 +2,8 @@
 
 import { notFound } from "next/navigation";
 import { AiOutlineLoading } from "react-icons/ai";
-import { EditAddressForm } from "~/components/account/edit_address_form";
-import { useFetchAddressById } from "~/hooks/delivery/use_fetch_adress_by_id";
+import { EditAddressForm } from "~/components/account/addresses/edit_address_form";
+import { useFetchAddressById } from "~/hooks/delivery/addresses/use_fetch_adress_by_id";
 import { cn } from "~/utils/cn";
 
 interface Props {

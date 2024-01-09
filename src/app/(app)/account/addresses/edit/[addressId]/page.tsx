@@ -1,4 +1,4 @@
-import { EditAddress } from "~/components/account/edit_address";
+import { EditAddress } from "~/components/account/addresses/edit_address";
 import { LoggedIn } from "~/components/auth/conditionnals/logged_in";
 
 interface Props {
