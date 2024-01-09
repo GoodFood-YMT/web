@@ -11,6 +11,7 @@ import {
   Utensils,
 } from "lucide-react";
 import { LoggedInAdminSilent } from "~/components/auth/conditionnals/silents/logged_in_admin_silent";
+import { LoggedInDelivererSilent } from "~/components/auth/conditionnals/silents/logged_in_deliverer_silent";
 import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/utils/cn";
 import { LoggedInManagerSilent } from "./auth/conditionnals/silents/logged_in_manager_silent";
@@ -89,6 +90,18 @@ export const AdminSidebar = () => {
               <Beef size={16} /> Ingredients
             </Link>
           </LoggedInManagerSilent>
+
+          <LoggedInDelivererSilent>
+            <Link
+              href="/admin/orders"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "w-full justify-start gap-1",
+              )}
+            >
+              <Beef size={16} /> Orders
+            </Link>
+          </LoggedInDelivererSilent>
         </div>
       </aside>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { pages } from "next/dist/build/templates/app-page";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { OrderCard } from "~/components/account/orders/order_card";
@@ -17,9 +18,11 @@ export const Orders = () => {
           <h2 className="text-lg font-medium tracking-tight">Last Orders</h2>
         </div>
         <div className="flex flex-col gap-2">
-          {orders.data?.data.map((order) => (
-            <OrderCard key={order.id} order={order} />
-          ))}
+          {orders.data?.pages.map((page) =>
+            page.data.map((order) => (
+              <OrderCard key={order.id} order={order} />
+            )),
+          )}
         </div>
 
         <div className="mt-4 flex items-center justify-center">
