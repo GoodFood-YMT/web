@@ -168,21 +168,19 @@ export const Checkout = () => {
                     </div>
                   ))}
 
-                  {addresses.data?.addresses.length &&
-                    addresses.data?.addresses.length <= 0 && (
-                      <div className="border p-4 shadow-sm">
-                        <h3 className="mb-1 flex items-center justify-between text-base font-medium tracking-tight">
-                          No addresses
-                          <Link
-                            href="/account/addresses/add"
-                            className={buttonVariants({ size: "xs" })}
-                          >
-                            Add one
-                          </Link>
-                        </h3>
-                      </div>
-                    )}
-
+                  {addresses.data && addresses.data.addresses.length <= 0 ? (
+                    <div className="border p-4 shadow-sm">
+                      <h3 className="mb-1 flex items-center justify-between text-base font-medium tracking-tight">
+                        No addresses
+                        <Link
+                          href="/account/addresses/add"
+                          className={buttonVariants({ size: "xs" })}
+                        >
+                          Add one
+                        </Link>
+                      </h3>
+                    </div>
+                  ) : null}
                   <div className="mt-2 flex justify-end">
                     <Button
                       onClick={() => {

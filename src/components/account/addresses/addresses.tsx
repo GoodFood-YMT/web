@@ -76,6 +76,14 @@ export const Addresses = () => {
               </div>
             </div>
           ))}
+
+          {addresses.data && addresses.data.addresses.length <= 0 ? (
+            <div className="border p-4 shadow-sm">
+              <h3 className="mb-1 flex items-center justify-between text-base font-medium tracking-tight">
+                No addresses
+              </h3>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
