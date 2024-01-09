@@ -56,11 +56,12 @@ export const Checkout = () => {
           })),
         },
         {
-          onSuccess: async () => {
+          onSuccess: async (data) => {
             await clearBasket.mutateAsync();
             await basket.refetch();
             toast.success("Order placed");
-            router.push("/account");
+            console.log(`/account/orders/${data.id}`);
+            window.location.href = `/account/orders/${data.id}`;
           },
           onError: () => {
             toast.error("An error occurred");

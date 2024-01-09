@@ -27,7 +27,7 @@ export const OrderInformation = ({ id }: Props) => {
 
   return (
     <>
-      <div className="flex w-full flex-col items-start gap-4 md:flex-row">
+      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
         <div className="h-full w-full bg-white p-4 shadow-sm">
           <div className="flex h-full w-full flex-col">
             <h2 className="mb-2 flex items-center justify-between text-lg font-medium tracking-tight">
@@ -49,7 +49,17 @@ export const OrderInformation = ({ id }: Props) => {
             </div>
           </div>
         </div>
-        <DeliveryInformation id={order.data.delivery_id} />
+        {order.data.delivery_id && order.data.delivery_id !== "null" ? (
+          <DeliveryInformation id={order.data.delivery_id} />
+        ) : (
+          <div className="h-full w-full bg-white p-4 shadow-sm">
+            <div className="flex h-full w-full flex-col items-center justify-center">
+              <h2 className="mb-2 flex items-center justify-center text-lg font-medium tracking-tight">
+                <span>No delivery yet</span>
+              </h2>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-4 w-full bg-white p-4 shadow-sm">
