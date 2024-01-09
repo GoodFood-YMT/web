@@ -1,13 +1,9 @@
 "use client";
 
-import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all_ingredients_providers_by_id";
+import { useFetchAllProviders } from "~/hooks/providers/use_fetch_all_providers";
 
-interface Props {
-    id: string;
-}
-
-export const AllProvidersHome = ({ id }: Props) => {
-  const providers = useFetchAllProvidersIngredients(id);
+export const AllProvidersHome = () => {
+  const providers = useFetchAllProviders();
 
   if (providers.isError) {
     return <div>Une erreur est survenue</div>;
