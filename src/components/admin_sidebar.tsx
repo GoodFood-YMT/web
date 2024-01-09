@@ -7,6 +7,7 @@ import {
   Home,
   Store,
   TableProperties,
+  Truck,
   Users,
   Utensils,
 } from "lucide-react";
@@ -93,13 +94,13 @@ export const AdminSidebar = () => {
 
           <LoggedInDelivererSilent>
             <Link
-              href="/admin/orders"
+              href="/admin/deliveries"
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "w-full justify-start gap-1",
               )}
             >
-              <Beef size={16} /> Orders
+              <Truck size={16} /> Deliveries
             </Link>
           </LoggedInDelivererSilent>
         </div>
