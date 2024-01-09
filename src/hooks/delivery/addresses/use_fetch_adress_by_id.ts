@@ -16,10 +16,16 @@ const fetchAddressById = async (id: string) => {
   });
 };
 
-export const useFetchAddressById = (id: string) => {
+export const useFetchAddressById = (id?: string) => {
   return useQuery({
     queryKey: ["address-by-id", id],
-    queryFn: () => fetchAddressById(id),
+    queryFn: () => {
+      if (id) {
+        return fetchAddressById(id);
+      }
+
+      return Promise.resolve(null);
+    },
     keepPreviousData: true,
   });
 };

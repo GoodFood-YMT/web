@@ -172,12 +172,12 @@ export const Basket = () => {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium">Shipping & Handling</span>
-                <span className="text-xs">2.00€</span>
+                <span className="text-xs">Free</span>
               </div>
               <div className="w-full border-b border-black/5"></div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Total</span>
-                <span className="text-sm">{formatToPrice(subtotal + 2)}€</span>
+                <span className="text-sm">{formatToPrice(subtotal)}€</span>
               </div>
             </div>
 
