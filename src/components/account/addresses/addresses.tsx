@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { TrashIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { buttonVariants } from "~/components/ui/button";
-import { useDeleteAddress } from "~/hooks/delivery/use_delete_address";
-import { useFetchAllAddresses } from "~/hooks/delivery/use_fetch_addresses";
+import { useDeleteAddress } from "~/hooks/delivery/addresses/use_delete_address";
+import { useFetchAllAddresses } from "~/hooks/delivery/addresses/use_fetch_addresses";
 
 export const Addresses = () => {
   const addresses = useFetchAllAddresses();
