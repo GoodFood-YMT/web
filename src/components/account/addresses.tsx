@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TrashIcon } from "lucide-react";
 import toast from "react-hot-toast";
-import { buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { useDeleteAddress } from "~/hooks/delivery/use_delete_address";
 import { useFetchAllAddresses } from "~/hooks/delivery/use_fetch_addresses";
+import { cn } from "~/utils/cn";
 
 export const Addresses = () => {
+  const router = useRouter();
   const addresses = useFetchAllAddresses();
 
   const deleteAddress = useDeleteAddress();
@@ -38,16 +40,40 @@ export const Addresses = () => {
             Add
           </Link>
         </div>
-        <div>
+        <div className="flex flex-col gap-2">
           {addresses.data?.addresses.map((address) => (
-            <div key={address.id} className="mb-2 flex justify-between">
-              <Link href={`/account/addresses/edit/${address.id}`}>
-                {address.name}
-              </Link>
-              <TrashIcon
-                className="hover: cursor-pointer"
-                onClick={() => handleDeleteAddress(address.id)}
-              />
+            <div
+              key={address.id}
+              className={cn(
+                "flex cursor-pointer items-center justify-between border p-4 shadow-sm hover:bg-gray-50",
+              )}
+              onClick={() =>
+                router.push(`/account/addresses/edit/${address.id}`)
+              }
+            >
+              <div>
+                <h3 className="mb-1 text-base font-medium tracking-tight">
+                  {address.name}
+                </h3>
+
+                <p className="text-sm">{address.street}</p>
+                <p className="text-sm">
+                  {address.zip_code} {address.city}, {address.country}
+                </p>
+              </div>
+
+              <div>
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteAddress(address.id);
+                  }}
+                >
+                  <TrashIcon size={16} />
+                </Button>
+              </div>
             </div>
           ))}
         </div>

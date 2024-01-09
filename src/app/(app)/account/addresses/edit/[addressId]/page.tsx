@@ -12,9 +12,6 @@ export default function Page({ params }: Props) {
     <LoggedIn>
       <div className="bg-white p-4 shadow-sm">
         <div className="flex h-full w-full flex-col">
-          <h2 className="mb-2 text-lg font-medium tracking-tight">
-            Address - id {params.addressId}
-          </h2>
           <EditAddress id={params.addressId} />
         </div>
       </div>
