@@ -7,13 +7,6 @@ const fetchUpdateProviders = async (
     id: string;
     name: string;
     restaurant_id: string;
-    ingredients: Array<{
-      id: string;
-      name: string;
-      price: number;
-      created_at: string;
-      updated_at: string;
-    }>;
   },
 ) => {
   return await apiFetch<{
@@ -32,13 +25,6 @@ export const useUpdateProviders = () => {
         id: string;
         name: string;
         restaurant_id: string;
-        ingredients: Array<{
-          id: string;
-          name: string;
-          price: number;
-          created_at: string;
-          updated_at: string;
-        }>;
       };
     }) => {
       return fetchUpdateProviders(payload.id, payload.data);
