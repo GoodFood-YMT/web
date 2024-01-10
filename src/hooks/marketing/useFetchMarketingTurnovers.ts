@@ -5,7 +5,8 @@ const fetchMarketingTurnovers = async () => {
   return await apiFetch<{
     data: Array<{
       createdAt: string;
-      count: number;
+      restaurantId: string;
+      sum: number;
     }>;
   }>(`/marketing/turnovers`);
 };
