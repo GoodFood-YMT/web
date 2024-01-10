@@ -14,18 +14,20 @@ export const EditAddress = ({ id }: Props) => {
   const address = useFetchAddressById(id);
 
   if (address.isLoading) {
-    <div className="flex items-center justify-center py-8">
-      <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
-    </div>;
+    return (
+      <div className="flex items-center justify-center py-8">
+        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+      </div>
+    );
   }
 
-  if (address.isError) {
+  if (address.isError || !address.data) {
     notFound();
   }
 
   return (
     <EditAddressForm
-      address={{ ...address.data, zipCode: address.data.zip_code }}
+      address={{ ...address.data, zipCode: address.data?.zip_code }}
     />
   );
 };
