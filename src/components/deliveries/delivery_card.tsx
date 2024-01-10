@@ -32,7 +32,7 @@ export const DeliveryCard = ({ delivery }: Props) => {
         <span className="text-sm">{delivery.id}</span>
         <br />
         <span className="text-base">
-          {DateTime.fromISO(delivery.created_at).toFormat("DDD")}
+          {DateTime.fromISO(delivery.created_at).toFormat("DDD HH:mm")}
         </span>
       </h3>
 

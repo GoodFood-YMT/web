@@ -1,14 +1,11 @@
 "use client";
 
-import { pages } from "next/dist/build/templates/app-page";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { OrderCard } from "~/components/account/orders/order_card";
 import { buttonVariants } from "~/components/ui/button";
 import { useFetchMyOrders } from "~/hooks/ordering/use_fetch_my_orders";
 
 export const Orders = () => {
-  const router = useRouter();
   const orders = useFetchMyOrders(1, 3);
 
   return (
@@ -25,11 +22,19 @@ export const Orders = () => {
           )}
         </div>
 
-        <div className="mt-4 flex items-center justify-center">
-          <Link href="/account/orders" className={buttonVariants({})}>
-            View all orders
-          </Link>
-        </div>
+        {orders.data?.pages[0].meta.total === 0 ? (
+          <div className="border p-4 shadow-sm">
+            <h3 className="mb-1 flex items-center justify-between text-base font-medium tracking-tight">
+              No orders
+            </h3>
+          </div>
+        ) : (
+          <div className="mt-4 flex items-center justify-center">
+            <Link href="/account/orders" className={buttonVariants({})}>
+              View all orders
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

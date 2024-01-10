@@ -43,7 +43,7 @@ export const AllUsers = () => {
                   {user.firstname} {user.lastname}
                 </TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{user.role_id}</TableCell>
+                <TableCell className="capitalize">{user.role_id}</TableCell>
                 <TableCell>
                   <Link href={`/admin/users/${user.id}`}>
                     <Eye />

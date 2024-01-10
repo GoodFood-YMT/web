@@ -16,7 +16,6 @@ interface Props {
 }
 
 export const DeliveryInformation = ({ deliveryId }: Props) => {
-  const router = useRouter();
   const delivery = useFetchDeliveryById(deliveryId);
   const takeDelivery = useTakeDelivery();
   const completeDelivery = useCompleteDelivery();
@@ -48,7 +47,11 @@ export const DeliveryInformation = ({ deliveryId }: Props) => {
   const { account } = useAccountStore();
 
   if (delivery.isLoading) {
-    return <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />;
+    return (
+      <div className="flex items-center justify-center py-8">
+        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+      </div>
+    );
   }
 
   if (delivery.isError) {
@@ -58,45 +61,44 @@ export const DeliveryInformation = ({ deliveryId }: Props) => {
   return (
     <>
       <div className="flex w-full flex-col items-start gap-4 md:flex-row">
-        <div className="h-full w-full bg-white p-4 shadow-sm">
+        <div className="h-full w-full">
           <div className="flex h-full w-full flex-col">
-            <h2 className="mb-2 flex items-center justify-between text-lg font-medium tracking-tight">
+            <h2 className="mb-4 flex items-center justify-between text-2xl font-medium tracking-tight">
               <span>
                 Delivery <span className="text-sm">({delivery.data?.id})</span>
               </span>
               <span className="rounded-full bg-orange-400 px-2 py-1 text-xs capitalize text-white">
                 {delivery.data?.status.toLocaleLowerCase()}
               </span>
-
-              {delivery.data.deliverer_id === null &&
-              delivery.data.status == "pending" ? (
-                <Button onClick={handleTakeDelivery}>Take</Button>
-              ) : null}
-
-              {delivery.data.status === "delivering" &&
-              account?.id === delivery.data.deliverer_id ? (
-                <Button onClick={handleCompleteDelivery}>Complete</Button>
-              ) : null}
             </h2>
             <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-2 text-sm">
               <span className="font-medium">Date</span>
               <span>
-                {DateTime.fromISO(delivery.data!.created_at).toFormat("DDD")}
+                {DateTime.fromISO(delivery.data!.created_at).toFormat(
+                  "DDD HH:mm",
+                )}
               </span>
 
-              <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-2 text-sm">
-                {delivery.data?.address && (
-                  <>
-                    <span className="font-medium">Address</span>
-                    <span>
-                      {delivery.data?.address.street},{" "}
-                      {delivery.data?.address.zip_code}{" "}
-                      {delivery.data?.address.city},{" "}
-                      {delivery.data?.address.country}
-                    </span>
-                  </>
-                )}
-              </div>
+              <span className="font-medium">Address</span>
+              <span>
+                {delivery.data?.address.street},{" "}
+                {delivery.data?.address.zip_code} {delivery.data?.address.city},{" "}
+                {delivery.data?.address.country}
+              </span>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              {delivery.data.deliverer_id === null &&
+              delivery.data.status == "pending" ? (
+                <Button onClick={handleTakeDelivery}>Take to delivery</Button>
+              ) : null}
+
+              {delivery.data.status === "delivering" &&
+              account?.id === delivery.data.deliverer_id ? (
+                <Button onClick={handleCompleteDelivery}>
+                  Mark as delivered
+                </Button>
+              ) : null}
             </div>
           </div>
         </div>

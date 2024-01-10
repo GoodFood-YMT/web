@@ -33,7 +33,7 @@ export const useFetchMyOrders = (page: number = 1, limit: number = 10) => {
   return useInfiniteQuery({
     queryKey: ["my-orders", page, limit],
     queryFn: ({ pageParam }) => {
-      return fetchFetchMyOrders(pageParam ?? page, limit);
+      return fetchMyOrders(pageParam ?? page, limit);
     },
     getNextPageParam: (result) => {
       if (result.meta.current_page < result.meta.last_page) {

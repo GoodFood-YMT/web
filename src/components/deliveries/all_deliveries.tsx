@@ -11,7 +11,11 @@ export const AllDeliveries = () => {
   const deliveries = useFetchAllDeliveries();
 
   if (deliveries.isLoading) {
-    return <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />;
+    return (
+      <div className="flex items-center justify-center py-8">
+        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+      </div>
+    );
   }
 
   if (deliveries.isError) {
@@ -19,28 +23,26 @@ export const AllDeliveries = () => {
   }
 
   return (
-    <div className="bg-white p-4 shadow-sm">
-      <div className="flex h-full w-full flex-col">
-        <div className="mb-2 flex justify-between">
-          <h2 className="text-lg font-medium tracking-tight">Deliveries</h2>
-        </div>
-        <div className="flex flex-col gap-2">
-          {deliveries.data.pages.map((page) =>
-            page.data.map((delivery) => (
-              <DeliveryCard key={delivery.id} delivery={delivery} />
-            )),
-          )}
-          {deliveries.hasNextPage && (
-            <div className="mt-4 flex justify-center">
-              <Button
-                onClick={() => deliveries.fetchNextPage()}
-                disabled={deliveries.isLoading}
-              >
-                Load more
-              </Button>
-            </div>
-          )}
-        </div>
+    <div className="flex h-full w-full flex-col">
+      <div className="mb-2 flex justify-between">
+        <h1 className="mb-4 text-2xl font-medium">Deliveries</h1>
+      </div>
+      <div className="flex flex-col gap-2">
+        {deliveries.data.pages.map((page) =>
+          page.data.map((delivery) => (
+            <DeliveryCard key={delivery.id} delivery={delivery} />
+          )),
+        )}
+        {deliveries.hasNextPage && (
+          <div className="mt-4 flex justify-center">
+            <Button
+              onClick={() => deliveries.fetchNextPage()}
+              disabled={deliveries.isLoading}
+            >
+              Load more
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

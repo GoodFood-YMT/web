@@ -20,7 +20,7 @@ import { LoggedInManagerSilent } from "./auth/conditionnals/silents/logged_in_ma
 
 export const AdminSidebar = () => {
   return (
-    <div className="relative min-h-[400px]">
+    <div className="relative">
       <aside className="sticky top-4 shadow-sm">
         <div className="flex flex-col gap-1">
           <Link
