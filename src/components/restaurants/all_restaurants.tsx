@@ -73,7 +73,9 @@ export const AllRestaurants = () => {
       </div>
 
       {restaurants.isLoading && (
-        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        <div className="flex items-center justify-center py-8">
+          <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        </div>
       )}
 
       {restaurants.hasNextPage && (

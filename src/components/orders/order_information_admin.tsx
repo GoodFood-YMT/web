@@ -4,7 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { DateTime } from "luxon";
 import { AiOutlineLoading } from "react-icons/ai";
-import { DeliveryInformation } from "~/components/account/orders/delivery/delivery_information";
+import { DeliveryInformationAdmin } from "~/components/orders/delivery_information_admin";
 import { useFetchOrderById } from "~/hooks/ordering/use_fetch_order_by_id";
 import { cn } from "~/utils/cn";
 import { formatToPrice } from "~/utils/format_to_price";
@@ -14,7 +14,7 @@ interface Props {
   id: string;
 }
 
-export const OrderInformation = ({ id }: Props) => {
+export const OrderInformationAdmin = ({ id }: Props) => {
   const order = useFetchOrderById(id);
 
   if (order.isLoading) {
@@ -32,7 +32,7 @@ export const OrderInformation = ({ id }: Props) => {
   return (
     <>
       <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="h-full w-full bg-white p-4 shadow-sm">
+        <div className="h-full w-full border bg-white p-4 shadow-sm">
           <div className="flex h-full w-full flex-col">
             <h2 className="mb-2 flex items-center justify-between text-lg font-medium tracking-tight">
               <span>
@@ -54,9 +54,9 @@ export const OrderInformation = ({ id }: Props) => {
           </div>
         </div>
         {order.data.delivery_id && order.data.delivery_id !== "null" ? (
-          <DeliveryInformation id={order.data.delivery_id} />
+          <DeliveryInformationAdmin id={order.data.delivery_id} />
         ) : (
-          <div className="h-full w-full bg-white p-4 shadow-sm">
+          <div className="h-full w-full border bg-white p-4 shadow-sm">
             <div className="flex h-full w-full flex-col items-center justify-center">
               <h2 className="mb-2 flex items-center justify-center text-lg font-medium tracking-tight">
                 <span>No delivery yet</span>
@@ -66,7 +66,7 @@ export const OrderInformation = ({ id }: Props) => {
         )}
       </div>
 
-      <div className="mt-4 w-full bg-white p-4 shadow-sm">
+      <div className="mt-4 w-full border bg-white p-4 shadow-sm">
         <div className="flex w-full flex-col">
           <h2 className="mb-2 flex items-center justify-between text-lg font-medium tracking-tight">
             <span>Products</span>
