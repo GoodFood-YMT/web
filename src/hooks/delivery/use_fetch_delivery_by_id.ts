@@ -7,8 +7,18 @@ const fetchDeliveryById = async (id: string) => {
     status: string;
     address_id: string;
     delivery_id: string;
+    deliverer_id: string;
     created_at: string;
     updated_at: string;
+    address: {
+      name: string;
+      street: string;
+      zip_code: string;
+      city: string;
+      country: string;
+      id: string;
+      user_id: string;
+    };
   }>(`/delivery/deliveries/${id}`);
 };
 
