@@ -6,10 +6,10 @@ import { cn } from "~/utils/cn";
 import { AddIngredient } from "~/components/ingredients/add_ingredient_form";
 
 interface Props {
-    id: string;
+  id: string;
 }
 
-export const AllProvidersTable = ({ id }: Props) => {
+export const OneProvider = ({ id }: Props) => {
   const providers_ingredients = useFetchAllProvidersIngredients(id);
 
   if (providers_ingredients.isError) {
