@@ -68,21 +68,15 @@ export const DeliveryInformation = ({ deliveryId }: Props) => {
                 {delivery.data?.status.toLocaleLowerCase()}
               </span>
 
-              {delivery.data.deliverer_id === null && (
-                <>
-                  {delivery.data.status !== "delivered" && (
-                    <>
-                      {account?.id === delivery.data.deliverer_id ? (
-                        <Button onClick={handleCompleteDelivery}>
-                          Complete
-                        </Button>
-                      ) : (
-                        <Button onClick={handleTakeDelivery}>Take</Button>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
+              {delivery.data.deliverer_id === null &&
+              delivery.data.status == "pending" ? (
+                <Button onClick={handleTakeDelivery}>Take</Button>
+              ) : null}
+
+              {delivery.data.status === "delivering" &&
+              account?.id === delivery.data.deliverer_id ? (
+                <Button onClick={handleCompleteDelivery}>Complete</Button>
+              ) : null}
             </h2>
             <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-2 text-sm">
               <span className="font-medium">Date</span>
