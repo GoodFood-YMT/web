@@ -1,7 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchFetchMyOrders = async (page: number, limit: number) => {
+const fetchMyOrders = async (page: number, limit: number) => {
   return await apiFetch<{
     meta: {
       total: number;

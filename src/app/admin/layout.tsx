@@ -5,13 +5,13 @@ import { Navbar } from "~/components/navbar";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div>
+    <>
       <Navbar />
       <div className="grid grid-cols-[1fr,4fr] gap-4 px-8">
         <AdminSidebar />
         <main className="bg-white p-4 shadow-sm">{children}</main>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }

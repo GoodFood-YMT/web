@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Eye } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
-import { buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import {
   Table,
   TableBody,
@@ -68,16 +68,20 @@ export const AllProductIngredientsTable = ({ productId }: Props) => {
       </Table>
 
       {ingredients.isLoading && (
-        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        <div className="flex items-center justify-center py-8">
+          <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        </div>
       )}
 
       {ingredients.hasNextPage && (
-        <button
-          onClick={() => ingredients.fetchNextPage()}
-          disabled={ingredients.isLoading}
-        >
-          Load more
-        </button>
+        <div className="mt-4 flex justify-center">
+          <Button
+            onClick={() => ingredients.fetchNextPage()}
+            disabled={ingredients.isLoading}
+          >
+            Load more
+          </Button>
+        </div>
       )}
     </>
   );

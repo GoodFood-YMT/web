@@ -14,7 +14,11 @@ export const EditProduct = ({ id }: Props) => {
   const product = useFetchProductById(id);
 
   if (product.isLoading) {
-    return <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />;
+    return (
+      <div className="flex items-center justify-center py-8">
+        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+      </div>
+    );
   }
 
   if (product.isError) {
