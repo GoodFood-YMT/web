@@ -10,7 +10,7 @@ interface Props {
   id: string;
 }
 
-export const DeliveryInformation = ({ id }: Props) => {
+export const DeliveryInformationAdmin = ({ id }: Props) => {
   const delivery = useFetchDeliveryById(id);
   const address = useFetchAddressById(delivery.data?.address_id);
 
@@ -29,7 +29,7 @@ export const DeliveryInformation = ({ id }: Props) => {
   //   const address = useFetchAddressById(delivery.data.id);
 
   return (
-    <div className="h-full w-full bg-white p-4 shadow-sm">
+    <div className="h-full w-full border bg-white p-4 shadow-sm">
       <div className="flex h-full w-full flex-col">
         <h2 className="mb-2 flex items-center justify-between text-lg font-medium tracking-tight">
           <span>

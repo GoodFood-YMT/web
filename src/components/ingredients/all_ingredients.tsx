@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
+import { Button } from "~/components/ui/button";
 import { useFetchAllIngredients } from "~/hooks/catalog/ingredients/use_fetch_all_ingredients";
 import { cn } from "~/utils/cn";
 
@@ -24,16 +25,20 @@ export const AllIngredients = () => {
         )}
 
         {ingredients.isLoading && (
-          <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+          <div className="flex items-center justify-center py-8">
+            <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+          </div>
         )}
 
         {ingredients.hasNextPage && (
-          <button
-            onClick={() => ingredients.fetchNextPage()}
-            disabled={ingredients.isLoading}
-          >
-            Load more
-          </button>
+          <div className="mt-4 flex justify-center">
+            <Button
+              onClick={() => ingredients.fetchNextPage()}
+              disabled={ingredients.isLoading}
+            >
+              Load more
+            </Button>
+          </div>
         )}
       </div>
     </>

@@ -5,6 +5,7 @@ import {
   Beef,
   Gauge,
   Home,
+  PackageOpenIcon,
   Store,
   TableProperties,
   Users,
@@ -65,6 +66,18 @@ export const AdminSidebar = () => {
               <TableProperties size={16} /> Categories
             </Link>
           </LoggedInAdminSilent>
+
+          <LoggedInManagerSilent>
+            <Link
+              href="/admin/orders"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "w-full justify-start gap-1",
+              )}
+            >
+              <PackageOpenIcon size={16} /> Orders
+            </Link>
+          </LoggedInManagerSilent>
 
           <LoggedInManagerSilent>
             <Link
