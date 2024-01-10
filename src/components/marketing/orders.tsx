@@ -18,7 +18,7 @@ export const Orders = () => {
 
   return (
     <div className="mt-4">
-      <Card className="rounded-none">
+      <Card className="!rounded-none">
         <Title>Past 30 days orders</Title>
         <BarChart
           className="mt-6"

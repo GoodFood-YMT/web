@@ -21,7 +21,7 @@ export const Turnover = () => {
 
   return (
     <div className="mt-4">
-      <Card className="rounded-none">
+      <Card className="!rounded-none">
         <Title>Past 30 days turnover</Title>
         <BarChart
           className="mt-6"
