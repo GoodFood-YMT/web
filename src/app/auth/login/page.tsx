@@ -7,13 +7,12 @@ export default function Page() {
   return (
     <div
       className={cn(
-        "flex h-screen flex-col items-center justify-center gap-12",
+        "z-10 flex h-screen flex-col items-center justify-center gap-12",
       )}
     >
       <Link href="/">
-        <Logo size={128} />
+        <Logo size={200} />
       </Link>
-      <h1 className="text-4xl font-medium">Sign in</h1>
       <LoginForm />
     </div>
   );

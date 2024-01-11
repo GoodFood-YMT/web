@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import {
   Form,
   FormControl,
@@ -39,8 +39,10 @@ export const LoginForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="w-[378px] space-y-8"
+        className="w-[400px] space-y-8 bg-white p-8"
       >
+        <h1 className="mb-4 text-2xl font-medium">Sign in</h1>
+
         <FormField
           control={form.control}
           name="email"
@@ -69,13 +71,13 @@ export const LoginForm = () => {
           )}
         />
         <div className="flex items-center justify-between gap-4">
-          <Button type="submit">Login</Button>
           <Link
             href="/auth/register"
-            className="text-orange-500 transition hover:text-orange-600"
+            className={buttonVariants({ variant: "ghost" })}
           >
             Not member ?
           </Link>
+          <Button type="submit">Login</Button>
         </div>
       </form>
     </Form>
