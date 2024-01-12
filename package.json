@@ -34,6 +34,7 @@
     "eslint-config-prettier": "^9.0.0",
     "lucide-react": "^0.279.0",
     "luxon": "^3.4.4",
+    "mapbox-gl": "^3.0.1",
     "next": "^14.0.4",
     "postcss": "8.4.30",
     "prettier": "^3.0.3",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^4.34.1",
-    "@types/luxon": "^3.4.0"
+    "@types/luxon": "^3.4.0",
+    "@types/mapbox-gl": "^2.7.19"
   }
 }

@@ -55,7 +55,6 @@ export const Addresses = () => {
                 <h3 className="mb-1 text-base font-medium tracking-tight">
                   {address.name}
                 </h3>
-
                 <p className="text-sm">{address.street}</p>
                 <p className="text-sm">
                   {address.zip_code} {address.city}, {address.country}

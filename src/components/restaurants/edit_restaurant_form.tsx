@@ -25,6 +25,7 @@ interface Props {
     name: string;
     enabled: boolean;
     address: string;
+    zip_code: string;
     city: string;
     country: string;
   };
@@ -34,6 +35,7 @@ const formSchema = z.object({
   name: z.string().optional(),
   enabled: z.boolean().optional(),
   address: z.string().optional(),
+  zipCode: z.string().optional(),
   city: z.string().optional(),
   country: z.string().optional(),
 });
@@ -48,6 +50,7 @@ export const EditRestaurantForm = ({ restaurant }: Props) => {
       name: restaurant.name,
       enabled: restaurant.enabled,
       address: restaurant.address,
+      zipCode: restaurant.zip_code,
       city: restaurant.city,
       country: restaurant.country,
     },
@@ -58,6 +61,7 @@ export const EditRestaurantForm = ({ restaurant }: Props) => {
       name?: string;
       enabled?: boolean;
       address?: string;
+      zipCode?: string;
       city?: string;
       country?: string;
     };
@@ -121,6 +125,20 @@ export const EditRestaurantForm = ({ restaurant }: Props) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="zipCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ZIP Code</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

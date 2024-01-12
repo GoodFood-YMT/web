@@ -11,6 +11,8 @@ const fetchAllCategories = async () => {
       country: string;
       id: string;
       user_id: string;
+      lat: number;
+      lon: number;
     }>;
   }>(`/delivery/addresses`);
 };

@@ -6,6 +6,7 @@ import { DateTime } from "luxon";
 import { AiOutlineLoading } from "react-icons/ai";
 import { DeliveryInformation } from "~/components/account/orders/delivery/delivery_information";
 import { useFetchOrderById } from "~/hooks/ordering/use_fetch_order_by_id";
+import { useFetchRestaurantById } from "~/hooks/restaurants/use_fetch_restaurant_by_id";
 import { cn } from "~/utils/cn";
 import { formatToPrice } from "~/utils/format_to_price";
 import { getRestaurantImage } from "~/utils/get_restaurant_image";
@@ -16,8 +17,9 @@ interface Props {
 
 export const OrderInformation = ({ id }: Props) => {
   const order = useFetchOrderById(id);
+  const restaurant = useFetchRestaurantById(order.data?.restaurant_id || "");
 
-  if (order.isLoading) {
+  if (order.isLoading || restaurant.isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
         <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
@@ -25,13 +27,13 @@ export const OrderInformation = ({ id }: Props) => {
     );
   }
 
-  if (order.isError) {
+  if (order.isError || restaurant.isError) {
     notFound();
   }
 
   return (
     <>
-      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid w-full grid-cols-1 gap-4">
         <div className="h-full w-full bg-white p-4 shadow-sm">
           <div className="flex h-full w-full flex-col">
             <h2 className="mb-2 flex items-center justify-between text-lg font-medium tracking-tight">
@@ -53,18 +55,24 @@ export const OrderInformation = ({ id }: Props) => {
             </div>
           </div>
         </div>
-        {order.data.delivery_id && order.data.delivery_id !== "null" ? (
-          <DeliveryInformation id={order.data.delivery_id} />
-        ) : (
-          <div className="h-full w-full bg-white p-4 shadow-sm">
-            <div className="flex h-full w-full flex-col items-center justify-center">
-              <h2 className="mb-2 flex items-center justify-center text-lg font-medium tracking-tight">
-                <span>No delivery yet</span>
-              </h2>
-            </div>
-          </div>
-        )}
       </div>
+
+      {order.data.delivery_id &&
+      order.data.delivery_id !== "null" &&
+      restaurant.data ? (
+        <DeliveryInformation
+          id={order.data.delivery_id}
+          restaurant={restaurant.data}
+        />
+      ) : (
+        <div className="mt-4 h-full w-full bg-white p-4 shadow-sm">
+          <div className="flex h-full w-full flex-col items-center justify-center">
+            <h2 className="mb-2 flex items-center justify-center text-lg font-medium tracking-tight">
+              <span>No delivery yet</span>
+            </h2>
+          </div>
+        </div>
+      )}
 
       <div className="mt-4 w-full bg-white p-4 shadow-sm">
         <div className="flex w-full flex-col">

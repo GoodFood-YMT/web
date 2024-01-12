@@ -21,6 +21,9 @@ const fetchAllRestaurants = async (page: number, limit: number, q: string) => {
       address: string;
       city: string;
       country: string;
+      zip_code: string;
+      lat: number;
+      lon: number;
       created_at: string;
       updated_at: string;
     }>;

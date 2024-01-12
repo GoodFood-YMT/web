@@ -9,6 +9,9 @@ const fetchRestaurantById = async (id: string) => {
     address: string;
     city: string;
     country: string;
+    zip_code: string;
+    lat: number;
+    lon: number;
     created_at: string;
     updated_at: string;
   }>(`/restaurants/${id}`);
