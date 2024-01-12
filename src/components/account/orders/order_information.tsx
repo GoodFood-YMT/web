@@ -45,6 +45,11 @@ export const OrderInformation = ({ id }: Props) => {
               </span>
             </h2>
             <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-2 text-sm">
+              <span className="font-medium">Restaurant</span>
+              <span>
+                {restaurant.data.name} {restaurant.data.city}
+              </span>
+
               <span className="font-medium">Date</span>
               <span>
                 {DateTime.fromISO(order.data.created_at).toFormat("DDD")}
