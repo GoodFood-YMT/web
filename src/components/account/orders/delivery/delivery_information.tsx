@@ -15,6 +15,8 @@ interface Props {
     enabled: boolean;
     address: string;
     city: string;
+    lat: number;
+    lon: number;
     country: string;
     created_at: string;
     updated_at: string;
@@ -64,7 +66,10 @@ export const DeliveryInformation = ({ id, restaurant }: Props) => {
       </div>
 
       {address.data && (
-        <DeliveryMap start={{ lat: 0, lon: 0 }} end={{ lat: 0, lon: 0 }} />
+        <DeliveryMap
+          start={{ lat: restaurant.lat, lon: restaurant.lon }}
+          end={{ lat: address.data.lat, lon: address.data.lon }}
+        />
       )}
     </>
   );

@@ -65,7 +65,7 @@ export const OrderInformation = ({ id }: Props) => {
           restaurant={restaurant.data}
         />
       ) : (
-        <div className="mt-4 h-full w-full bg-white p-4 shadow-sm">
+        <div className="mt-4 w-full bg-white p-4 shadow-sm">
           <div className="flex h-full w-full flex-col items-center justify-center">
             <h2 className="mb-2 flex items-center justify-center text-lg font-medium tracking-tight">
               <span>No delivery yet</span>

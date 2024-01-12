@@ -9,6 +9,8 @@ const fetchAddressById = async (id: string) => {
     zip_code: string;
     city: string;
     country: string;
+    lat: number;
+    lon: number;
     id: string;
     user_id: string;
   }>(`/delivery/addresses/${id}`, {
