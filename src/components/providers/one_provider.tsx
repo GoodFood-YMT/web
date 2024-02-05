@@ -5,7 +5,7 @@ import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all
 import toast from "react-hot-toast";
 import { cn } from "~/utils/cn";
 import { AddIngredientProvider } from "~/components/providers/add_ingredient_provider";
-import { useDeleteProviderIngredient } from "~/components/providers/use_delete_ingredients_providers_by_id";
+import { useDeleteProviderIngredient } from "~/hooks/providers/use_delete_ingredients_providers_by_id";
 import {
   Table,
   TableBody,
