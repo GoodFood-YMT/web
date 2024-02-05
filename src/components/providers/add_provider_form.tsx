@@ -40,12 +40,12 @@ export const AddProviderForm = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
-                        <FormItem>
+                        <FormItem >
                         <FormLabel>Name</FormLabel>
                         <FormControl>
                             <Input {...field} />

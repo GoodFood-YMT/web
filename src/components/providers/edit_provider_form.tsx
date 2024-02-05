@@ -57,7 +57,7 @@ export const EditProviderForm = ({ provider }: Props) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
                     name="data.name"
