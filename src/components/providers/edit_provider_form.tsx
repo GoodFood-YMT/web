@@ -71,7 +71,7 @@ export const EditProviderForm = ({ provider }: Props) => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Create</Button>
+                <Button type="submit">Save</Button>
             </form>
         </Form>
     );
