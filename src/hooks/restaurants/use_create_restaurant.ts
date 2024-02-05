@@ -5,6 +5,7 @@ const fetchCreateRestaurant = async (data: {
   name: string;
   enabled: boolean;
   address: string;
+  zipCode: string;
   city: string;
   country: string;
 }) => {
@@ -13,6 +14,7 @@ const fetchCreateRestaurant = async (data: {
     name: string;
     enabled: boolean;
     address: string;
+    zipCode: string;
     city: string;
     country: string;
   }>(`/restaurants`, {
@@ -27,6 +29,7 @@ export const useCreateRestaurant = () => {
       name: string;
       enabled: boolean;
       address: string;
+      zipCode: string;
       city: string;
       country: string;
     }) => {

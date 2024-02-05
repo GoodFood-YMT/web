@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchFetchMyOrders = async (page: number, limit: number) => {
+const fetchMyOrders = async (page: number, limit: number) => {
   return await apiFetch<{
     meta: {
       total: number;
@@ -30,9 +30,17 @@ const fetchFetchMyOrders = async (page: number, limit: number) => {
 };
 
 export const useFetchMyOrders = (page: number = 1, limit: number = 10) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["my-orders", page, limit],
-    queryFn: () => fetchFetchMyOrders(page, limit),
+    queryFn: ({ pageParam }) => {
+      return fetchMyOrders(pageParam ?? page, limit);
+    },
+    getNextPageParam: (result) => {
+      if (result.meta.current_page < result.meta.last_page) {
+        return result.meta.current_page + 1;
+      }
+      return undefined;
+    },
     keepPreviousData: true,
   });
 };

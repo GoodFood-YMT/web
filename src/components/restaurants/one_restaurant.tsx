@@ -33,8 +33,8 @@ export const OneRestaurant = ({ id }: Props) => {
         <div className="relative h-full w-full bg-black/30">
           <span className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-white px-2 py-1 text-xs text-black">
             <MapPin size={12} />
-            {restaurant.data.address}, {restaurant.data.city},{" "}
-            {restaurant.data.country}
+            {restaurant.data.address}, {restaurant.data.zip_code}{" "}
+            {restaurant.data.city}, {restaurant.data.country}
           </span>
           <span className="absolute bottom-2 left-2 text-xl font-medium text-white">
             {restaurant.data.name}

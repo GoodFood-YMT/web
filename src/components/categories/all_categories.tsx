@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
+import { Button } from "~/components/ui/button";
 import { useFetchAllCategories } from "~/hooks/catalog/categories/use_fetch_all_categories";
 import { cn } from "~/utils/cn";
 
@@ -25,16 +26,20 @@ export const AllCategories = () => {
       </div>
 
       {categories.isLoading && (
-        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        <div className="flex items-center justify-center py-8">
+          <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        </div>
       )}
 
       {categories.hasNextPage && (
-        <button
-          onClick={() => categories.fetchNextPage()}
-          disabled={categories.isLoading}
-        >
-          Load more
-        </button>
+        <div className="mt-4 flex justify-center">
+          <Button
+            onClick={() => categories.fetchNextPage()}
+            disabled={categories.isLoading}
+          >
+            Load more
+          </Button>
+        </div>
       )}
     </>
   );

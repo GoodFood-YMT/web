@@ -47,7 +47,7 @@ const UserDropdownComponent = () => {
         {account ? (
           <>
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => router.push("/orders")}>
+              <DropdownMenuItem onClick={() => router.push("/account")}>
                 <User className="mr-2 h-4 w-4" />
                 <span>My account</span>
               </DropdownMenuItem>

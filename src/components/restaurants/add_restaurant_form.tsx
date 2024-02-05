@@ -22,6 +22,7 @@ const formSchema = z.object({
   name: z.string(),
   enabled: z.boolean(),
   address: z.string(),
+  zipCode: z.string(),
   city: z.string(),
   country: z.string(),
 });
@@ -89,6 +90,20 @@ export const AddRestaurantForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="zipCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ZIP Code</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

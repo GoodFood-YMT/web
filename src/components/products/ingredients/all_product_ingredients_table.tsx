@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Eye } from "lucide-react";
+import { Eye, Trash } from "lucide-react";
+import toast from "react-hot-toast";
 import { AiOutlineLoading } from "react-icons/ai";
-import { buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import {
   Table,
   TableBody,
@@ -12,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { useDeleteProductIngredient } from "~/hooks/catalog/products/use_delete_product_ingredient";
 import { useFetchAllIngredientsByProduct } from "~/hooks/catalog/products/use_fetch_ingredients_by_product";
 import { useFetchProductById } from "~/hooks/catalog/products/use_fetch_product_by_id";
 import { cn } from "~/utils/cn";
@@ -23,6 +25,22 @@ interface Props {
 export const AllProductIngredientsTable = ({ productId }: Props) => {
   const product = useFetchProductById(productId);
   const ingredients = useFetchAllIngredientsByProduct(productId);
+  const deleteProductIngredient = useDeleteProductIngredient();
+
+  const handleDeleteProductIngredient = (ingredientId: string) => {
+    deleteProductIngredient.mutate(
+      { productId, ingredientId },
+      {
+        onSuccess: () => {
+          toast.success("Ingredient deleted");
+          ingredients.refetch();
+        },
+        onError: () => {
+          toast.error("An error occured");
+        },
+      },
+    );
+  };
 
   if (ingredients.isError || product.isError) {
     return <div>Something went wrong</div>;
@@ -46,6 +64,7 @@ export const AllProductIngredientsTable = ({ productId }: Props) => {
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Quantity</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -55,11 +74,19 @@ export const AllProductIngredientsTable = ({ productId }: Props) => {
                 <TableCell>{ingredient.name}</TableCell>
                 <TableCell>{ingredient.quantity}</TableCell>
                 <TableCell>
-                  <Link
-                    href={`/admin/products/${ingredient.productId}/ingredients/${ingredient.ingredientId}`}
-                  >
-                    <Eye />
-                  </Link>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/admin/products/${ingredient.productId}/ingredients/${ingredient.ingredientId}`}
+                    >
+                      <Eye />
+                    </Link>
+                    <Trash
+                      className="cursor-pointer"
+                      onClick={() =>
+                        handleDeleteProductIngredient(ingredient.ingredientId)
+                      }
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             )),
@@ -68,16 +95,20 @@ export const AllProductIngredientsTable = ({ productId }: Props) => {
       </Table>
 
       {ingredients.isLoading && (
-        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        <div className="flex items-center justify-center py-8">
+          <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+        </div>
       )}
 
       {ingredients.hasNextPage && (
-        <button
-          onClick={() => ingredients.fetchNextPage()}
-          disabled={ingredients.isLoading}
-        >
-          Load more
-        </button>
+        <div className="mt-4 flex justify-center">
+          <Button
+            onClick={() => ingredients.fetchNextPage()}
+            disabled={ingredients.isLoading}
+          >
+            Load more
+          </Button>
+        </div>
       )}
     </>
   );

@@ -14,12 +14,23 @@ export const EditIngredient = ({ id }: Props) => {
   const ingredient = useFetchIngredientById(id);
 
   if (ingredient.isLoading) {
-    return <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />;
+    return (
+      <div className="flex items-center justify-center py-8">
+        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+      </div>
+    );
   }
 
   if (ingredient.isError) {
     notFound();
   }
 
-  return <EditIngredientForm ingredient={ingredient.data} />;
+  return (
+    <>
+      <h1 className="mb-4 text-2xl font-medium">
+        Ingredient {`"${ingredient.data.name}"`}
+      </h1>
+      <EditIngredientForm ingredient={ingredient.data} />
+    </>
+  );
 };

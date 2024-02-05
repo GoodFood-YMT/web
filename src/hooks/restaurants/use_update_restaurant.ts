@@ -7,6 +7,7 @@ const fetchUpdateRestaurant = async (
     name?: string;
     enabled?: boolean;
     address?: string;
+    zipCode?: string;
     city?: string;
     country?: string;
   },
@@ -27,6 +28,7 @@ export const useUpdateRestaurant = () => {
         name?: string;
         enabled?: boolean;
         address?: string;
+        zipCode?: string;
         city?: string;
         country?: string;
       };
