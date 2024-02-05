@@ -11,6 +11,7 @@ import {
   Truck,
   Users,
   Utensils,
+  Package,
 } from "lucide-react";
 import { LoggedInAdminSilent } from "~/components/auth/conditionnals/silents/logged_in_admin_silent";
 import { LoggedInDelivererSilent } from "~/components/auth/conditionnals/silents/logged_in_deliverer_silent";
@@ -66,6 +67,18 @@ export const AdminSidebar = () => {
               )}
             >
               <TableProperties size={16} /> Categories
+            </Link>
+          </LoggedInAdminSilent>
+          
+          <LoggedInAdminSilent>
+            <Link
+              href="/admin/providers"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "w-full justify-start gap-1",
+              )}
+            >
+              <Package size={16} /> Providers
             </Link>
           </LoggedInAdminSilent>
 
