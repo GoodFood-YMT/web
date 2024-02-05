@@ -1,32 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchCreateProvider = async (
-  id: string,
-  data: {
-    provider_id: string;
-    ingredient_id: string;
-}) => {
+const fetchCreateIngredientProvider = async (data: {
+  provider_id: string,
+  ingredient_id: string}) => {
   return await apiFetch<{
     id: string;
     provider_id: string;
     ingredient_id: string;
-  }>(`/providers/${id}/ingredients`, {
+  }>(`/providers/${data.provider_id}/ingredients`, {
     method: "POST",
     json: data,
   });
 };
 
-export const useCreateProvider = () => {
+export const useCreateIngredientProvider = () => {
   return useMutation({
     mutationFn: (payload: {
-      id: string;
-      data: {
-        provider_id: string;
-        ingredient_id: string;
-      };
+      provider_id: string,
+      ingredient_id: string
     }) => {
-      return fetchCreateProvider(payload.id, payload.data);
+      return fetchCreateIngredientProvider(payload);
     },
   });
 };
