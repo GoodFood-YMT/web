@@ -3,7 +3,15 @@
 import { AiOutlineLoading } from "react-icons/ai";
 import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all_ingredients_providers_by_id";
 import { cn } from "~/utils/cn";
-import { AddIngredient } from "~/components/ingredients/add_ingredient_form";
+import { AddIngredientProvider } from "~/components/providers/add_ingredient_provider";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 
 interface Props {
   id: string;
@@ -19,28 +27,28 @@ export const OneProvider = ({ id }: Props) => {
   return (
     <>
       <h1>Provider {providers_ingredients.data?.pages[0]?.data[0]?.provider_id}</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Ingredients</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Ingredients</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {providers_ingredients.data?.pages.map((page) =>
             page.data.map((providers_ingredients) => (
-                <tr>
-                    <td>{providers_ingredients.ingredient[0].name}</td>
-                    <td>
-                        <link>
-                          Delete
-                        </link>
-                    </td>
-                </tr>
+              <TableRow>
+                <TableCell>{providers_ingredients.ingredient[0].name}</TableCell>
+                <TableCell>
+                  <link href="">
+                    Delete
+                  </link>
+                </TableCell>
+              </TableRow>
             )),
           )}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
 
       {providers_ingredients.isLoading && (
         <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
@@ -55,7 +63,7 @@ export const OneProvider = ({ id }: Props) => {
         </button>
       )}
       
-      <AddIngredient />
+      <AddIngredientProvider />
     </>
   );
 };
