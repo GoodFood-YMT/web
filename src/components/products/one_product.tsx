@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useQueryClient } from "@tanstack/react-query";
 import { ShoppingBag } from "lucide-react";
+import toast from "react-hot-toast";
 import { Button } from "~/components/ui/button";
 import { useAddToBasket } from "~/hooks/basket/use_add_to_basket";
 import { useFetchProductById } from "~/hooks/catalog/products/use_fetch_product_by_id";
@@ -19,9 +20,17 @@ export const OneProduct = ({ id }: Props) => {
   const addToBasket = useAddToBasket();
 
   const onAddToBasket = async () => {
-    await addToBasket.mutateAsync({ id, quantity: 1 });
-    // toast.success("Product added to basket");
-    await queryClient.invalidateQueries({ queryKey: ["basket"] });
+    addToBasket.mutate(
+      { id, quantity: 1 },
+      {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ["basket"] });
+        },
+        onError: (error: any) => {
+          toast.error("You can order from one restaurant at a time.");
+        },
+      },
+    );
   };
 
   if (product.isLoading) {
