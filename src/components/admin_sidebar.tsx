@@ -70,7 +70,7 @@ export const AdminSidebar = () => {
             </Link>
           </LoggedInAdminSilent>
           
-          <LoggedInAdminSilent>
+          <LoggedInManagerSilent>
             <Link
               href="/admin/providers"
               className={cn(
@@ -80,7 +80,7 @@ export const AdminSidebar = () => {
             >
               <Package size={16} /> Providers
             </Link>
-          </LoggedInAdminSilent>
+          </LoggedInManagerSilent>
 
           <LoggedInManagerSilent>
             <Link
