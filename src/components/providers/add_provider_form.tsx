@@ -1,4 +1,5 @@
 "use client";
+
 import { useCreateProvider } from "~/hooks/providers/use_create_providers";
 import toast from "react-hot-toast";
 import z from "zod";
@@ -27,7 +28,7 @@ export const AddProviderForm = () => {
         resolver: zodResolver(formSchema),
     });
       
-    const handleSubmit = (payload: z.infer<typeof formSchema>) => {
+    const onSubmit = (payload: z.infer<typeof formSchema>) => {
         createProvider.mutate(payload, {
             onSuccess: () => {
                 toast.success("Provider created");
@@ -40,21 +41,34 @@ export const AddProviderForm = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem >
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                    <FormItem>
                         <FormLabel>Name</FormLabel>
                         <FormControl>
                             <Input {...field} />
                         </FormControl>
-                        <FormMessage />
+                    </FormItem>
+                )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="restaurant_id"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Restaurant ID</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Create</Button>
+
+                <Button type="submit">Save</Button>
             </form>
         </Form>
     );
