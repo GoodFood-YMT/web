@@ -26,7 +26,6 @@ export const AllProvidersTable = () => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>ID</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
@@ -35,9 +34,6 @@ export const AllProvidersTable = () => {
         {providers.data?.pages.map((page) =>
           page.data.map((providers) => (
             <TableRow>
-              <TableCell>
-                {providers.id}
-              </TableCell>
               <TableCell>
                 {providers.name}
               </TableCell>
