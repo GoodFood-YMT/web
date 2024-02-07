@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useFetchAllRestaurants } from "~/hooks/restaurants/use_fetch_all_restaurants";
 import {
   Form,
   FormControl,
@@ -15,6 +16,13 @@ import {
 } from "~/components/ui/form";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
 const formSchema = z.object({
     name: z.string(),
@@ -23,11 +31,13 @@ const formSchema = z.object({
   
 export const AddProviderForm = () => {
     const createProvider = useCreateProvider();
+    const { data } = useFetchAllRestaurants();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
     });
       
+
     const onSubmit = (payload: z.infer<typeof formSchema>) => {
         createProvider.mutate(payload, {
             onSuccess: () => {
@@ -38,6 +48,10 @@ export const AddProviderForm = () => {
             },
         });
     };
+
+    // Flatten the data from the useFetchAllIngredients hook
+    const allRestaurant = data?.pages.flatMap((page) => page.data) ?? [];
+  
 
     return (
         <Form {...form}>
@@ -60,9 +74,20 @@ export const AddProviderForm = () => {
                     name="restaurant_id"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Restaurant ID</FormLabel>
+                            <FormLabel>Restaurant</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Select onValueChange={field.onChange} defaultValue={field.value ?? undefined} required={false}>
+                                    <SelectTrigger>
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {allRestaurant.map((restaurant) => (
+                                            <SelectItem key={restaurant.id} value={restaurant.id}>
+                                                {restaurant.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </FormControl>
                         </FormItem>
                     )}
