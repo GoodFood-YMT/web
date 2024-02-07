@@ -1,5 +1,6 @@
 "use client";
 
+import { useFetchAllProvidersOrders } from "~/hooks/ordering/use_fetch_all_providers_orders";
 import Link from "next/link";
 import { Eye } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
@@ -12,12 +13,11 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { cn } from "~/utils/cn";
-import { useFetchAllProviders } from "~/hooks/providers/use_fetch_all_providers";
 
-export const AllProvidersTable = () => {
-  const providers = useFetchAllProviders();
+export const AllProvidersOrdersTable = () => {
+  const providersOrders = useFetchAllProvidersOrders();
 
-  if (providers.isError) {
+  if (providersOrders.isError) {
     return <div>Something went wrong</div>;
   }
 
@@ -31,12 +31,12 @@ export const AllProvidersTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {providers.data?.pages.map((page) =>
+          {providersOrders.data?.pages.map((page) =>
             page.data.map((provider) => (
               <TableRow key={provider.id}>
                 <TableCell>{provider.name}</TableCell>
                 <TableCell>
-                  <Link href={`/admin/providers/${provider.id}`}>
+                  <Link href={`/admin/providersOrders/${provider.id}`}>
                     <Eye />
                   </Link>
                 </TableCell>
@@ -46,16 +46,16 @@ export const AllProvidersTable = () => {
         </TableBody>
       </Table>
 
-      {providers.isLoading && (
+      {providersOrders.isLoading && (
         <div className="flex items-center justify-center py-8">
           <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
         </div>
       )}
 
-      {providers.hasNextPage && (
+      {providersOrders.hasNextPage && (
         <button
-          onClick={() => providers.fetchNextPage()}
-          disabled={providers.isLoading}
+          onClick={() => providersOrders.fetchNextPage()}
+          disabled={providersOrders.isLoading}
         >
           Load more
         </button>

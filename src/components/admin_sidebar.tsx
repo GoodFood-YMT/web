@@ -96,6 +96,18 @@ export const AdminSidebar = () => {
 
           <LoggedInManagerSilent>
             <Link
+              href="/admin/providersOrders"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "w-full justify-start gap-1",
+              )}
+            >
+              <PackageOpenIcon size={16} /> Providers Orders
+            </Link>
+          </LoggedInManagerSilent>
+
+          <LoggedInManagerSilent>
+            <Link
               href="/admin/products"
               className={cn(
                 buttonVariants({ variant: "outline" }),
