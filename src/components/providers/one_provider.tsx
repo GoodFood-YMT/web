@@ -49,10 +49,6 @@ export const OneProvider = ({ id }: Props) => {
     }
   };
 
-  if (providers_ingredients.isError) {
-    return <div>Une erreur est survenue</div>;
-  }
-
   return (
     <>
       <h1>Provider {providers_ingredients.data?.pages[0]?.data[0]?.provider_id}</h1>
@@ -96,7 +92,7 @@ export const OneProvider = ({ id }: Props) => {
         </button>
       )}
       
-      <AddIngredientProvider />
+      <AddIngredientProvider providerId={id}/>
     </>
   );
 };
