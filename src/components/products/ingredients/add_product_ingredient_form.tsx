@@ -76,13 +76,11 @@ export const AddIngredientProductForm = ({ productId }: Props) => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {ingredients.data?.pages.map((page) =>
-                      page.data.map((ingredient) => (
-                        <SelectItem key={ingredient.id} value={ingredient.id}>
-                          {ingredient.name}
-                        </SelectItem>
-                      )),
-                    )}
+                    {ingredients.data?.data.map((ingredient) => (
+                      <SelectItem key={ingredient.id} value={ingredient.id}>
+                        {ingredient.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormControl>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { LoggedInManager } from "~/components/auth/conditionnals/logged_in_manager";
-import { AllIngredients } from "~/components/ingredients/all_ingredients";
 import { AllIngredientsTable } from "~/components/ingredients/all_ingredients_table";
 import { buttonVariants } from "~/components/ui/button";
 
