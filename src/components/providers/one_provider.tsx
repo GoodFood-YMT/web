@@ -1,11 +1,11 @@
 "use client";
 
-import { AiOutlineLoading } from "react-icons/ai";
-import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all_ingredients_providers_by_id";
+import { useState } from "react";
+import { TrashIcon } from "lucide-react";
 import toast from "react-hot-toast";
-import { cn } from "~/utils/cn";
+import { AiOutlineLoading } from "react-icons/ai";
 import { AddIngredientProvider } from "~/components/providers/add_ingredient_provider";
-import { useDeleteProviderIngredient } from "~/hooks/providers/use_delete_ingredients_providers_by_id";
+import { Button } from "~/components/ui/button";
 import {
   Table,
   TableBody,
@@ -14,85 +14,88 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { Button } from "~/components/ui/button";
-import { useState } from "react"; 
+import { useDeleteProviderIngredient } from "~/hooks/providers/use_delete_ingredients_providers_by_id";
+import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all_ingredients_providers_by_id";
+import { useFetchProviderById } from "~/hooks/providers/use_fetch_providers_by_id";
+import { cn } from "~/utils/cn";
 
 interface Props {
   id: string;
 }
 
 export const OneProvider = ({ id }: Props) => {
-  const [isLoading, setIsLoading] = useState(false); 
-  const providers_ingredients = useFetchAllProvidersIngredients(id);
-
+  const provider = useFetchProviderById(id);
+  const providersIngredients = useFetchAllProvidersIngredients(id);
   const deleteProviderIngredient = useDeleteProviderIngredient();
+
   const handleDeleteRow = async (providerId: string, ingredientId: string) => {
-    try {
-      setIsLoading(true);
-  
-      await deleteProviderIngredient.mutate(
-        { provider_id: providerId, ingredient_id: ingredientId },
-        {
-          onSuccess: () => {
-            toast.success("Ingredient deleted successfully");
-          },
-          onError: () => {
-            toast.error("An error occurred while deleting the ingredient");
-          },
-        }
-      );
-      await providers_ingredients.refetch();
-    } catch (error) {
-      console.error("Erreur lors de la suppression", error);
-    } finally {
-      setIsLoading(false);
-    }
+    await deleteProviderIngredient.mutate(
+      { providerId, ingredientId },
+      {
+        onSuccess: () => {
+          toast.success("Ingredient deleted successfully");
+          providersIngredients.refetch();
+        },
+        onError: () => {
+          toast.error("An error occurred while deleting the ingredient");
+        },
+      },
+    );
+
+    await providersIngredients.refetch();
   };
+
+  if (provider.isLoading || providersIngredients.isLoading) {
+    <div className="flex items-center justify-center py-4">
+      <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
+    </div>;
+  }
 
   return (
     <>
-      <h1>Provider {providers_ingredients.data?.pages[0]?.data[0]?.provider_id}</h1>
+      <h1 className="mb-4 text-2xl font-medium">
+        Provider {'"'}
+        {provider.data?.name}
+        {'"'}
+      </h1>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Ingredients</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Ingredient</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {providers_ingredients.data?.pages.map((page) =>
-            page.data.map((providers_ingredients) => (
-              <TableRow>
-                <TableCell>{providers_ingredients.ingredient[0].name}</TableCell>
-                <TableCell>
-                  <Button
-                    type="button"
-                    onClick={() => handleDeleteRow(providers_ingredients.provider_id ,providers_ingredients.ingredient[0].id)}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Deleting..." : "Delete"}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            )),
+          {providersIngredients.data?.data.map((ingredient) => (
+            <TableRow key={ingredient.ingredientId}>
+              <TableCell>{ingredient.name}</TableCell>
+              <TableCell className="text-right">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() =>
+                    handleDeleteRow(
+                      ingredient.providerId,
+                      ingredient.ingredientId,
+                    )
+                  }
+                  disabled={deleteProviderIngredient.isLoading}
+                >
+                  <TrashIcon size={16} />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+
+          {providersIngredients.data?.data.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={2}>No ingredients</TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>
 
-      {providers_ingredients.isLoading && (
-        <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
-      )}
-
-      {providers_ingredients.hasNextPage && (
-        <button
-          onClick={() => providers_ingredients.fetchNextPage()}
-          disabled={providers_ingredients.isLoading}
-        >
-          Load more
-        </button>
-      )}
-      
-      <AddIngredientProvider providerId={id}/>
+      <AddIngredientProvider providerId={id} />
     </>
   );
 };

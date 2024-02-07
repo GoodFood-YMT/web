@@ -1,18 +1,16 @@
-import { useCreateIngredientProvider } from "~/hooks/providers/use_create_ingredients_providers_by_id";
-import { useFetchAllIngredients } from "~/hooks/catalog/ingredients/use_fetch_all_ingredients";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "~/components/ui/form";
-import { Button } from "~/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -20,60 +18,70 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { useFetchAllIngredients } from "~/hooks/catalog/ingredients/use_fetch_all_ingredients";
+import { useCreateIngredientProvider } from "~/hooks/providers/use_create_ingredients_providers_by_id";
+import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all_ingredients_providers_by_id";
 
 interface Props {
   providerId: string;
 }
 
 const formSchema = z.object({
-  ingredient_id: z.string(),
+  ingredientId: z.string(),
 });
 
 export const AddIngredientProvider = ({ providerId }: Props) => {
   const createIngredientProvider = useCreateIngredientProvider();
-  const { data } = useFetchAllIngredients();
+  const allIngredients = useFetchAllIngredients();
+  const providerIngredients = useFetchAllProvidersIngredients(providerId);
+
+  const filteredIngredients =
+    allIngredients.data?.data.filter((ingredient) => {
+      return !providerIngredients.data?.data.some(
+        (providerIngredient) =>
+          providerIngredient.ingredientId === ingredient.id,
+      );
+    }) ?? [];
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = (payload: z.infer<typeof formSchema>) => {
-    const { ingredient_id } = payload;
-    createIngredientProvider.mutate({ provider_id: providerId, ingredient_id }, 
-    {
-      onSuccess: () => {
-        toast.success("Ingredient added");
+    createIngredientProvider.mutate(
+      { providerId, ingredientId: payload.ingredientId },
+      {
+        onSuccess: () => {
+          toast.success("Ingredient added");
+          providerIngredients.refetch();
+        },
+        onError: () => {
+          toast.error("An error occurred");
+        },
       },
-      onError: () => {
-        toast.error("An error occurred");
-      },
-    },
-  );
+    );
   };
-
-   // Flatten the data from the useFetchAllIngredients hook
-   const allIngredients = data?.pages.flatMap((page) => page.data) ?? [];
-  
-   // Filter ingredients that are not already in the provider
-   const filteredIngredients = allIngredients.filter(
-     (ingredient) =>
-       !form.getValues("ingredient_id") ||
-       ingredient.id !== form.getValues("ingredient_id")
-   );
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mt-8 border border-border p-4"
+      >
         <FormField
           control={form.control}
-          name="ingredient_id"
+          name="ingredientId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Ingredient</FormLabel>
+              <FormLabel>Add a new ingredient</FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value ?? undefined} required={false}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value ?? undefined}
+                  required={false}
+                >
                   <SelectTrigger>
-                      <SelectValue />
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {filteredIngredients.map((ingredient) => (
@@ -82,12 +90,14 @@ export const AddIngredientProvider = ({ providerId }: Props) => {
                       </SelectItem>
                     ))}
                   </SelectContent>
-              </Select>
+                </Select>
               </FormControl>
             </FormItem>
           )}
         />
-        <Button type="submit">Save</Button>
+        <Button className="mt-2" type="submit">
+          Save
+        </Button>
       </form>
     </Form>
   );

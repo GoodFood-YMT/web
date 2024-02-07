@@ -1,10 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
-const fetchDeleteProviderIngredient = async (
-    data: {
-        provider_id: string;
-        ingredient_id: string;
+const fetchDeleteProviderIngredient = async (data: {
+  providerId: string;
+  ingredientId: string;
 }) => {
   return await apiFetch<{
     id: string;
@@ -12,19 +11,18 @@ const fetchDeleteProviderIngredient = async (
     ingredient_id: string;
     created_at: string;
     updated_at: string;
-}>(`/providers/${data.provider_id}/ingredients`, {
+  }>(`/providers/${data.providerId}/ingredients`, {
     method: "DELETE",
-    json: data,
+    json: {
+      ingredientId: data.ingredientId,
+    },
   });
 };
 
 export const useDeleteProviderIngredient = () => {
-    return useMutation({
-        mutationFn: (payload: {
-            provider_id: string,
-            ingredient_id: string
-          }) => {
-            return fetchDeleteProviderIngredient(payload);
-        },
-    });
+  return useMutation({
+    mutationFn: (payload: { providerId: string; ingredientId: string }) => {
+      return fetchDeleteProviderIngredient(payload);
+    },
+  });
 };
