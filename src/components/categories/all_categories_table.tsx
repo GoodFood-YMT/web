@@ -27,7 +27,6 @@ export const AllCategoriesTable = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[350px]">ID</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -36,7 +35,6 @@ export const AllCategoriesTable = () => {
           {categories.data?.pages.map((page) =>
             page.data.map((category) => (
               <TableRow key={category.id}>
-                <TableCell className="font-medium">{category.id}</TableCell>
                 <TableCell>{category.name}</TableCell>
                 <TableCell>
                   <Link href={`/admin/categories/${category.id}`}>
