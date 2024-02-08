@@ -9,7 +9,7 @@ interface Props {
 export default function Page({ params }: Props) {
   return (
     <LoggedInManager>
-      <h1 className="mb-4 text-2xl font-medium">Add Ingredient to Product</h1>
+      <h1 className="mb-4 text-2xl font-medium">Add ingredient</h1>
       <AddIngredientProductForm productId={params.productId} />
     </LoggedInManager>
   );

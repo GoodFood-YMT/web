@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Eye, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { AiOutlineLoading } from "react-icons/ai";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { buttonVariants } from "~/components/ui/button";
 import {
   Table,
   TableBody,
@@ -68,28 +68,34 @@ export const AllProductIngredientsTable = ({ productId }: Props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {ingredients.data?.pages.map((page) =>
-            page.data.map((ingredient) => (
-              <TableRow key={ingredient.ingredientId}>
-                <TableCell>{ingredient.name}</TableCell>
-                <TableCell>{ingredient.quantity}</TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Link
-                      href={`/admin/products/${ingredient.productId}/ingredients/${ingredient.ingredientId}`}
-                    >
-                      <Eye />
-                    </Link>
-                    <Trash
-                      className="cursor-pointer"
-                      onClick={() =>
-                        handleDeleteProductIngredient(ingredient.ingredientId)
-                      }
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-            )),
+          {ingredients.data?.data.map((ingredient) => (
+            <TableRow key={ingredient.ingredientId}>
+              <TableCell>{ingredient.name}</TableCell>
+              <TableCell>{ingredient.quantity}</TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Link
+                    href={`/admin/products/${ingredient.productId}/ingredients/${ingredient.ingredientId}`}
+                  >
+                    <Eye />
+                  </Link>
+                  <Trash
+                    className="cursor-pointer"
+                    onClick={() =>
+                      handleDeleteProductIngredient(ingredient.ingredientId)
+                    }
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+
+          {ingredients.data?.data.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={3}>
+                <div className="text-center">No ingredients</div>
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>
@@ -97,17 +103,6 @@ export const AllProductIngredientsTable = ({ productId }: Props) => {
       {ingredients.isLoading && (
         <div className="flex items-center justify-center py-8">
           <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
-        </div>
-      )}
-
-      {ingredients.hasNextPage && (
-        <div className="mt-4 flex justify-center">
-          <Button
-            onClick={() => ingredients.fetchNextPage()}
-            disabled={ingredients.isLoading}
-          >
-            Load more
-          </Button>
         </div>
       )}
     </>

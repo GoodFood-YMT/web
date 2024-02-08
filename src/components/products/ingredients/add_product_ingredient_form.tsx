@@ -23,6 +23,7 @@ import {
 } from "~/components/ui/select";
 import { useFetchAllIngredients } from "~/hooks/catalog/ingredients/use_fetch_all_ingredients";
 import { useFetchAddProductIngredient } from "~/hooks/catalog/products/use_add_ingredient_to_product";
+import { useFetchAllIngredientsByProduct } from "~/hooks/catalog/products/use_fetch_ingredients_by_product";
 
 interface Props {
   productId: string;
@@ -30,13 +31,21 @@ interface Props {
 
 const formSchema = z.object({
   ingredientId: z.string(),
-  quantity: z.number(),
+  quantity: z.number().gt(0),
 });
 
 export const AddIngredientProductForm = ({ productId }: Props) => {
   const router = useRouter();
   const ingredients = useFetchAllIngredients();
+  const productIngredients = useFetchAllIngredientsByProduct(productId);
   const addProductIngredient = useFetchAddProductIngredient();
+
+  const filteredIngredients =
+    ingredients.data?.data.filter((ingredient) => {
+      return !productIngredients.data?.data.some(
+        (productIngredient) => productIngredient.ingredientId === ingredient.id,
+      );
+    }) ?? [];
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,7 +85,7 @@ export const AddIngredientProductForm = ({ productId }: Props) => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {ingredients.data?.data.map((ingredient) => (
+                    {filteredIngredients.map((ingredient) => (
                       <SelectItem key={ingredient.id} value={ingredient.id}>
                         {ingredient.name}
                       </SelectItem>

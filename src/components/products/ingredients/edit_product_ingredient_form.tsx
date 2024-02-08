@@ -14,14 +14,6 @@ import {
   FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
-import { useFetchAllIngredients } from "~/hooks/catalog/ingredients/use_fetch_all_ingredients";
 import { useFetchUpdateProductIngredient } from "~/hooks/catalog/products/use_update_product_ingredient";
 
 interface Props {
@@ -33,8 +25,7 @@ interface Props {
 }
 
 const formSchema = z.object({
-  ingredientId: z.string(),
-  quantity: z.number(),
+  quantity: z.number().gt(0),
 });
 
 export const EditIngredientProductForm = ({
@@ -43,13 +34,11 @@ export const EditIngredientProductForm = ({
 }: Props) => {
   console.log(productIngredient);
   const router = useRouter();
-  const ingredients = useFetchAllIngredients();
   const addProductIngredient = useFetchUpdateProductIngredient();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      ingredientId: productIngredient.ingredientId,
       quantity: productIngredient.quantity,
     },
   });
@@ -57,7 +46,7 @@ export const EditIngredientProductForm = ({
   const handleSubmit = (payload: z.infer<typeof formSchema>) => {
     const data = { quantity: payload.quantity };
     addProductIngredient.mutate(
-      { productId, ingredientId: payload.ingredientId, data },
+      { productId, ingredientId: productIngredient.ingredientId, data },
       {
         onSuccess: () => {
           toast.success("Ingredient added");
@@ -73,36 +62,6 @@ export const EditIngredientProductForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="ingredientId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Ingredient</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value ?? undefined}
-                  required={false}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {ingredients.data?.pages.map((page) =>
-                      page.data.map((ingredient) => (
-                        <SelectItem key={ingredient.id} value={ingredient.id}>
-                          {ingredient.name}
-                        </SelectItem>
-                      )),
-                    )}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="quantity"
