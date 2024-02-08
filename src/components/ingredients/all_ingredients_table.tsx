@@ -43,6 +43,14 @@ export const AllIngredientsTable = () => {
               </TableCell>
             </TableRow>
           ))}
+
+          {ingredients.data?.data.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={3} className="text-center">
+                No ingredients found
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
 

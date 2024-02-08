@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { apiFetch } from "~/utils/basic_fetch";
 
 const fetchAllProvidersOrders = async (page: number, limit: number) => {
@@ -34,9 +34,17 @@ export const useFetchAllProvidersOrders = (
   page: number = 1,
   limit: number = 10,
 ) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["providers-orders", page, limit],
-    queryFn: () => fetchAllProvidersOrders(page, limit),
+    queryFn: ({ pageParam }) => {
+      return fetchAllProvidersOrders(pageParam ?? page, limit);
+    },
+    getNextPageParam: (result) => {
+      if (result.meta.current_page < result.meta.last_page) {
+        return result.meta.current_page + 1;
+      }
+      return undefined;
+    },
     keepPreviousData: true,
   });
 };

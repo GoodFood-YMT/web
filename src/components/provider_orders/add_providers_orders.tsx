@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Minus, Plus, TrashIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
@@ -13,6 +15,7 @@ import {
   FormItem,
   FormLabel,
 } from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -40,6 +43,10 @@ export const AddProvidersOrders = () => {
   const providers = useFetchAllProviders();
   const ingredients = useFetchAllIngredients();
   const router = useRouter();
+
+  const [selectedIngredientId, setSelectedIngredientId] =
+    useState<string>("null");
+  const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -82,6 +89,79 @@ export const AddProvidersOrders = () => {
       },
     );
   };
+
+  const handleAddIngredient = (ingredientId: string, quantity: number) => {
+    if (!ingredientId || ingredientId === "null") {
+      toast.error("You must select an ingredient");
+      return;
+    }
+
+    if (quantity <= 0) {
+      toast.error("Quantity must be greater than 0");
+      return;
+    }
+
+    form.setValue("ingredients", [
+      ...form.getValues("ingredients"),
+      {
+        name:
+          ingredients.data?.data.find((i) => i.id === ingredientId)?.name ?? "",
+        ingredientId,
+        quantity,
+      },
+    ]);
+
+    setSelectedIngredientId("null");
+    setSelectedQuantity(1);
+  };
+
+  const handleDeleteIngredient = (ingredientId: string) => {
+    form.setValue(
+      "ingredients",
+      form
+        .getValues("ingredients")
+        .filter((i) => i.ingredientId !== ingredientId),
+    );
+  };
+
+  const handleIncrementQuantity = (ingredientId: string) => {
+    const ingredient = form
+      .getValues("ingredients")
+      .find((i) => i.ingredientId === ingredientId);
+
+    if (ingredient) {
+      form.setValue(
+        "ingredients",
+        form
+          .getValues("ingredients")
+          .map((i) =>
+            i.ingredientId === ingredientId
+              ? { ...i, quantity: i.quantity + 1 }
+              : i,
+          ),
+      );
+    }
+  };
+
+  const handleDecrementQuantity = (ingredientId: string) => {
+    const ingredient = form
+      .getValues("ingredients")
+      .find((i) => i.ingredientId === ingredientId);
+
+    if (ingredient && ingredient.quantity > 1) {
+      form.setValue(
+        "ingredients",
+        form
+          .getValues("ingredients")
+          .map((i) =>
+            i.ingredientId === ingredientId
+              ? { ...i, quantity: i.quantity - 1 }
+              : i,
+          ),
+      );
+    }
+  };
+
   return (
     <Form {...form}>
       <form
@@ -127,20 +207,66 @@ export const AddProvidersOrders = () => {
               No ingredients selected
             </div>
           ) : (
-            <div className="flex flex-col gap-2 border border-border p-4">
+            <div className="flex flex-col border border-border">
               {ingredientsForm.map((ingredient) => (
-                <span key={ingredient.ingredientId}>{ingredient.name}</span>
+                <div
+                  key={ingredient.ingredientId}
+                  className="flex items-center justify-between px-4 py-4 text-sm even:bg-slate-50"
+                >
+                  {ingredient.name}
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          handleDecrementQuantity(ingredient.ingredientId)
+                        }
+                      >
+                        <Minus size={10} />
+                      </Button>
+                      <span className="w-[50px] px-2 text-center font-medium">
+                        {ingredient.quantity}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          handleIncrementQuantity(ingredient.ingredientId)
+                        }
+                      >
+                        <Plus size={10} />
+                      </Button>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        handleDeleteIngredient(ingredient.ingredientId)
+                      }
+                    >
+                      <TrashIcon size={16} />
+                    </Button>
+                  </div>
+                </div>
               ))}
             </div>
           )}
         </div>
 
-        <div>
-          <Select>
+        <div className="grid grid-cols-[3fr,3fr,1fr] gap-4">
+          <Select
+            value={selectedIngredientId}
+            onValueChange={(value) => setSelectedIngredientId(value)}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Ingredient" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="null" disabled>
+                Select an ingredient
+              </SelectItem>
               {filteredIngredients?.map((ingredient) => (
                 <SelectItem key={ingredient.id} value={ingredient.id}>
                   {ingredient.name}
@@ -148,6 +274,22 @@ export const AddProvidersOrders = () => {
               ))}
             </SelectContent>
           </Select>
+
+          <Input
+            placeholder="Quantity"
+            type="number"
+            value={selectedQuantity}
+            onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}
+          />
+
+          <Button
+            type="button"
+            onClick={() =>
+              handleAddIngredient(selectedIngredientId, selectedQuantity)
+            }
+          >
+            Add
+          </Button>
         </div>
 
         <div className="mt-4 flex justify-end">
