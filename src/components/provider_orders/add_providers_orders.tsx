@@ -25,6 +25,7 @@ import {
 } from "~/components/ui/select";
 import { useFetchAllIngredients } from "~/hooks/catalog/ingredients/use_fetch_all_ingredients";
 import { useCreateProviderOrder } from "~/hooks/ordering/use_create_provider_order";
+import { useFetchAllProvidersIngredients } from "~/hooks/providers/use_fetch_all_ingredients_providers_by_id";
 import { useFetchAllProviders } from "~/hooks/providers/use_fetch_all_providers";
 
 const formSchema = z.object({
@@ -39,15 +40,6 @@ const formSchema = z.object({
 });
 
 export const AddProvidersOrders = () => {
-  const createIngredientProvider = useCreateProviderOrder();
-  const providers = useFetchAllProviders();
-  const ingredients = useFetchAllIngredients();
-  const router = useRouter();
-
-  const [selectedIngredientId, setSelectedIngredientId] =
-    useState<string>("null");
-  const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,12 +47,24 @@ export const AddProvidersOrders = () => {
     },
   });
 
+  const selectedProviderId = form.watch("providerId");
+
+  const createIngredientProvider = useCreateProviderOrder();
+  const providers = useFetchAllProviders();
+  const ingredients = useFetchAllProvidersIngredients(selectedProviderId);
+  const router = useRouter();
+
+  const [selectedIngredientId, setSelectedIngredientId] =
+    useState<string>("null");
+  const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
+
   const ingredientsForm = form.watch("ingredients");
 
   const filteredIngredients = ingredients.data?.data.filter(
     (ingredient) =>
       !ingredientsForm.some(
-        (ingredientForm) => ingredientForm.ingredientId === ingredient.id,
+        (ingredientForm) =>
+          ingredientForm.ingredientId === ingredient.ingredientId,
       ),
   );
 
@@ -105,7 +109,8 @@ export const AddProvidersOrders = () => {
       ...form.getValues("ingredients"),
       {
         name:
-          ingredients.data?.data.find((i) => i.id === ingredientId)?.name ?? "",
+          ingredients.data?.data.find((i) => i.ingredientId === ingredientId)
+            ?.name ?? "",
         ingredientId,
         quantity,
       },
@@ -268,7 +273,10 @@ export const AddProvidersOrders = () => {
                 Select an ingredient
               </SelectItem>
               {filteredIngredients?.map((ingredient) => (
-                <SelectItem key={ingredient.id} value={ingredient.id}>
+                <SelectItem
+                  key={ingredient.ingredientId}
+                  value={ingredient.ingredientId}
+                >
                   {ingredient.name}
                 </SelectItem>
               ))}
@@ -284,16 +292,20 @@ export const AddProvidersOrders = () => {
 
           <Button
             type="button"
-            onClick={() =>
-              handleAddIngredient(selectedIngredientId, selectedQuantity)
-            }
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleAddIngredient(selectedIngredientId, selectedQuantity);
+            }}
           >
             Add
           </Button>
         </div>
 
         <div className="mt-4 flex justify-end">
-          <Button type="submit">Create</Button>
+          <Button type="submit" disabled={createIngredientProvider.isLoading}>
+            Create
+          </Button>
         </div>
       </form>
     </Form>

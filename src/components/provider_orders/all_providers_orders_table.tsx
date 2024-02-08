@@ -42,10 +42,10 @@ export const AllProvidersOrdersTable = () => {
                   )}
                 </TableCell>
                 <TableCell className="capitalize">
-                  {providerOrder.status}
+                  {providerOrder.status.toLowerCase()}
                 </TableCell>
                 <TableCell>
-                  <Link href={`/admin/providersOrders/${providerOrder.id}`}>
+                  <Link href={`/admin/providers-orders/${providerOrder.id}`}>
                     <Eye />
                   </Link>
                 </TableCell>

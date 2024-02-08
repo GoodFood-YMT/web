@@ -16,6 +16,11 @@ export const useFetchAllProvidersIngredients = (id: string) => {
   return useQuery({
     queryKey: ["providers-ingredients-by-id", id],
     queryFn: () => {
+      if (!id || id === "") {
+        return Promise.resolve({
+          data: [],
+        });
+      }
       return fetchAllProvidersIngredients(id);
     },
     keepPreviousData: true,
