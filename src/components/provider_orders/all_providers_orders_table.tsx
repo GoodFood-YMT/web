@@ -13,36 +13,42 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { cn } from "~/utils/cn";
+import { useFetchAllProviders } from "~/hooks/providers/use_fetch_all_providers";
 
 export const AllProvidersOrdersTable = () => {
   const providersOrders = useFetchAllProvidersOrders();
-
-  if (providersOrders.isError) {
-    return <div>Something went wrong</div>;
-  }
+  const providers = useFetchAllProviders();
 
   return (
     <>
       <Table className="mt-4">
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
+            <TableHead>Provider</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Prix total</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {providersOrders.data?.pages.map((page) =>
-            page.data.map((provider) => (
-              <TableRow key={provider.id}>
-                <TableCell>{provider.name}</TableCell>
+          {
+            providersOrders.data?.data.map((providerOrder) =>(
+              <TableRow key={providerOrder.id}>
                 <TableCell>
-                  <Link href={`/admin/providersOrders/${provider.id}`}>
+                  {providers.data?.pages.map((page) =>
+                    page.data.find((provider) => provider.id === providerOrder.provider_id)?.name
+                  )}
+                </TableCell>
+                <TableCell>{providerOrder.status}</TableCell>
+                <TableCell>{providerOrder.total_price}</TableCell>
+                <TableCell>
+                  <Link href={`/admin/providersOrders/${providerOrder.id}`}>
                     <Eye />
                   </Link>
                 </TableCell>
               </TableRow>
-            )),
-          )}
+            ))
+          }
         </TableBody>
       </Table>
 
@@ -50,15 +56,6 @@ export const AllProvidersOrdersTable = () => {
         <div className="flex items-center justify-center py-8">
           <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
         </div>
-      )}
-
-      {providersOrders.hasNextPage && (
-        <button
-          onClick={() => providersOrders.fetchNextPage()}
-          disabled={providersOrders.isLoading}
-        >
-          Load more
-        </button>
       )}
     </>
   );
