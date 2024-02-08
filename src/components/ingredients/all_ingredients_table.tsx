@@ -18,7 +18,7 @@ export const AllIngredientsTable = () => {
   const ingredients = useFetchAllIngredients();
 
   if (ingredients.isError) {
-    return <div>Something wen wrong</div>;
+    return <div>Something went wrong</div>;
   }
 
   return (
