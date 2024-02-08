@@ -22,6 +22,7 @@ const fetchAllProvidersOrders = async (page: number, limit: number) => {
       user_id: string;
       address_id: string;
       restaurant_id: string;
+      provider_id: string;
       delivery_id: string;
       created_at: string;
       updated_at: string;

@@ -5,13 +5,13 @@ import {
   Beef,
   Gauge,
   Home,
+  Package,
   PackageOpenIcon,
   Store,
   TableProperties,
   Truck,
   Users,
   Utensils,
-  Package,
 } from "lucide-react";
 import { LoggedInAdminSilent } from "~/components/auth/conditionnals/silents/logged_in_admin_silent";
 import { LoggedInDelivererSilent } from "~/components/auth/conditionnals/silents/logged_in_deliverer_silent";
@@ -69,7 +69,7 @@ export const AdminSidebar = () => {
               <TableProperties size={16} /> Categories
             </Link>
           </LoggedInAdminSilent>
-          
+
           <LoggedInManagerSilent>
             <Link
               href="/admin/providers"
@@ -91,6 +91,18 @@ export const AdminSidebar = () => {
               )}
             >
               <PackageOpenIcon size={16} /> Orders
+            </Link>
+          </LoggedInManagerSilent>
+
+          <LoggedInManagerSilent>
+            <Link
+              href="/admin/providers-orders"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "w-full justify-start gap-1",
+              )}
+            >
+              <PackageOpenIcon size={16} /> Providers Orders
             </Link>
           </LoggedInManagerSilent>
 

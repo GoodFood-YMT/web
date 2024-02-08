@@ -1,5 +1,6 @@
 "use client";
 
+import { useFetchAllProvidersOrders } from "~/hooks/ordering/use_fetch_all_providers_orders";
 import Link from "next/link";
 import { Eye } from "lucide-react";
 import { AiOutlineLoading } from "react-icons/ai";
@@ -14,51 +15,47 @@ import {
 import { cn } from "~/utils/cn";
 import { useFetchAllProviders } from "~/hooks/providers/use_fetch_all_providers";
 
-export const AllProvidersTable = () => {
+export const AllProvidersOrdersTable = () => {
+  const providersOrders = useFetchAllProvidersOrders();
   const providers = useFetchAllProviders();
-
-  if (providers.isError) {
-    return <div>Something went wrong</div>;
-  }
 
   return (
     <>
       <Table className="mt-4">
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
+            <TableHead>Provider</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Prix total</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {providers.data?.pages.map((page) =>
-            page.data.map((provider) => (
-              <TableRow key={provider.id}>
-                <TableCell>{provider.name}</TableCell>
+          {
+            providersOrders.data?.data.map((providerOrder) =>(
+              <TableRow key={providerOrder.id}>
                 <TableCell>
-                  <Link href={`/admin/providers/${provider.id}`}>
+                  {providers.data?.pages.map((page) =>
+                    page.data.find((provider) => provider.id === providerOrder.provider_id)?.name
+                  )}
+                </TableCell>
+                <TableCell>{providerOrder.status}</TableCell>
+                <TableCell>{providerOrder.total_price}</TableCell>
+                <TableCell>
+                  <Link href={`/admin/providersOrders/${providerOrder.id}`}>
                     <Eye />
                   </Link>
                 </TableCell>
               </TableRow>
-            )),
-          )}
+            ))
+          }
         </TableBody>
       </Table>
 
-      {providers.isLoading && (
+      {providersOrders.isLoading && (
         <div className="flex items-center justify-center py-8">
           <AiOutlineLoading className={cn("h-6 w-6 animate-spin")} />
         </div>
-      )}
-
-      {providers.hasNextPage && (
-        <button
-          onClick={() => providers.fetchNextPage()}
-          disabled={providers.isLoading}
-        >
-          Load more
-        </button>
       )}
     </>
   );
