@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import z from "zod";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -34,6 +35,7 @@ export const AddProvidersOrders = () => {
   const createIngredientProvider = useCreateProviderOrder();
   const providers = useFetchAllProviders();
   const ingredients = useFetchAllIngredients();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,6 +46,7 @@ export const AddProvidersOrders = () => {
     {
       onSuccess: () => {
         toast.success("Your order has been created successfully");
+        router.push("/admin/providersOrders");
       },
       onError: () => {
         toast.error("An error occurred");
