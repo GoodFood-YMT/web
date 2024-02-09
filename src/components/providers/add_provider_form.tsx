@@ -56,7 +56,7 @@ export const AddProviderForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="name"
@@ -70,7 +70,9 @@ export const AddProviderForm = () => {
           )}
         />
 
-        <Button type="submit">Create</Button>
+        <div className="flex justify-end">
+          <Button type="submit">Create</Button>
+        </div>
       </form>
     </Form>
   );
