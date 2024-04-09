@@ -224,9 +224,11 @@ export const AddProvidersOrders = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() =>
-                          handleDecrementQuantity(ingredient.ingredientId)
-                        }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleDecrementQuantity(ingredient.ingredientId);
+                        }}
                       >
                         <Minus size={10} />
                       </Button>
@@ -236,9 +238,11 @@ export const AddProvidersOrders = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() =>
-                          handleIncrementQuantity(ingredient.ingredientId)
-                        }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleIncrementQuantity(ingredient.ingredientId);
+                        }}
                       >
                         <Plus size={10} />
                       </Button>
@@ -247,9 +251,11 @@ export const AddProvidersOrders = () => {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      onClick={() =>
-                        handleDeleteIngredient(ingredient.ingredientId)
-                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleDeleteIngredient(ingredient.ingredientId);
+                      }}
                     >
                       <TrashIcon size={16} />
                     </Button>
