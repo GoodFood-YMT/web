@@ -8,7 +8,7 @@ import { Loader } from "~/components/loader";
 import { Button, buttonVariants } from "~/components/ui/button";
 import { useAddToBasket } from "~/hooks/basket/use_add_to_basket";
 import { useClearBasket } from "~/hooks/basket/use_clear_basket";
-import { useDeleteFromBasket } from "~/hooks/basket/use_delete_from_basket";
+import { useDeleteFromBasket } from "~/hooks/basket/use_delete_basket";
 import { useFetchBasket } from "~/hooks/basket/use_fetch_basket";
 import { formatToPrice } from "~/utils/format_to_price";
 import { getRestaurantImage } from "~/utils/get_restaurant_image";
